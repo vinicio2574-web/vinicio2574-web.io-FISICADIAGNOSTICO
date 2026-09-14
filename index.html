@@ -3,145 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluación Diagnóstica de Física - Acceso Universitario</title>
+    <title>Plataforma de Evaluación - Física</title>
+    <!-- Hoja de estilos externa -->
     <link rel="stylesheet" href="index.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- Instructions Overlay / Welcome Screen -->
-    <div id="welcome-modal" class="modal-overlay active">
-        <div class="modal-card">
-            <div class="brand-header">
-                <span class="badge">Plataforma Académica Kiosk</span>
-                <h1>Examen de Admisión: Física General</h1>
-                <p>Simulador Oficial de Evaluación de Conocimientos para Acceso a la Educación Superior</p>
+    <!-- Overlay para Forzar Pantalla Completa (Modo Kiosko) -->
+    <div id="fullscreen-overlay" class="overlay active">
+        <div class="overlay-card">
+            <i class="fa-solid fa-shield-halved security-icon"></i>
+            <h2>Evaluación Controlada de Física</h2>
+            <p>Para garantizar la integridad académica, esta evaluación se ejecuta en <strong>modo pantalla completa</strong> con monitoreo activo de seguridad.</p>
+            <button id="btn-enter" class="btn btn-primary"><i class="fa-solid fa-expand"></i> Iniciar / Continuar Evaluación</button>
+        </div>
+    </div>
+
+    <!-- Advertencia de Salida / Enfoque -->
+    <div id="warning-banner" class="warning-banner hidden">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span><strong>¡ADVERTENCIA DE SEGURIDAD!</strong> Se ha detectado pérdida de foco o intento de cambio de pestaña. Esta acción queda registrada en la bitácora.</span>
+    </div>
+
+    <!-- Encabezado de la Plataforma -->
+    <header class="header">
+        <div class="header-container">
+            <div class="brand">
+                <i class="fa-solid fa-atom brand-icon"></i>
+                <div class="brand-text">
+                    <h1>Evaluación de Física General</h1>
+                    <span class="subtext">Sistema de Evaluación Académica Continua</span>
+                </div>
             </div>
             
-            <div class="instructions-body">
-                <h3>Normativa e Instrucciones Generales:</h3>
-                <ul>
-                    <li><strong>Estructura:</strong> Consta de <strong>30 preguntas</strong> de opción múltiple distribuidas en 10 bloques temáticos esenciales.</li>
-                    <li><strong>Tiempo Total:</strong> Tienes exactamente <strong>45 minutos</strong> (1 min 30 s por pregunta). El contador iniciará inmediatamente al hacer clic en "Iniciar Examen".</li>
-                    <li><strong>Modo Seguro Kiosk:</strong> La prueba se ejecutará en <strong>pantalla completa obligatoria</strong>. Está prohibida la copia de texto, el clic derecho y las capturas de pantalla.</li>
-                    <li><strong>Navegación y Autoguardado:</strong> Tus respuestas se guardan automáticamente. Si la página se recarga por error, conservarás tu progreso e intento en el tiempo restante. Puedes navegar libremente entre preguntas antes de finalizar.</li>
-                    <li><strong>Retroalimentación:</strong> La calificación final, el desglose por temas y las explicaciones detalladas se mostrarán al terminar la prueba.</li>
-                </ul>
-
-                <div class="form-group">
-                    <label for="student-name">Nombre Completo del Estudiante:</label>
-                    <input type="text" id="student-name" placeholder="Ej. Juan Carlos Pérez" required autocomplete="off">
+            <div class="status-panel">
+                <div class="status-card">
+                    <i class="fa-solid fa-clock"></i>
+                    <div>
+                        <span class="label">Tiempo Restante</span>
+                        <div id="timer" class="value">60:00</div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="modal-footer">
-                <button id="btn-start" class="btn btn-primary btn-block">Aceptar Términos e Iniciar Examen</button>
+                <div class="status-card">
+                    <i class="fa-solid fa-list-check"></i>
+                    <div>
+                        <span class="label">Progreso</span>
+                        <div id="progress-text" class="value">0 / 30</div>
+                    </div>
+                </div>
             </div>
         </div>
+    </header>
+
+    <!-- Barra de Progreso Visual -->
+    <div class="progress-bar-container">
+        <div id="progress-bar" class="progress-bar-fill" style="width: 0%;"></div>
     </div>
 
-    <!-- Main Exam UI (Hidden initially) -->
-    <div id="exam-app" class="exam-container hidden">
-        <!-- Header / Navigation Bar -->
-        <header class="exam-header">
-            <div class="user-info-badge">
-                <span id="display-student-name">Estudiante</span>
-                <span class="status-indicator online">En Vivo</span>
-            </div>
-            <div class="exam-title-header">
-                <h2>Evaluación Diagnóstica de Física</h2>
-            </div>
-            <div class="timer-card" id="timer-card">
-                <span class="timer-icon">⏱️</span>
-                <span id="timer-display">45:00</span>
-            </div>
-        </header>
+    <!-- Contenido Principal -->
+    <main class="main-container">
 
-        <!-- Main Layout Grid -->
-        <div class="exam-body">
-            <!-- Sidebar: Navigation Grid -->
-            <aside class="exam-sidebar">
-                <div class="sidebar-header">
-                    <h3>Navegación</h3>
-                    <span id="answered-counter" class="pill">0 / 30 Resp.</span>
+        <!-- Panel de Preguntas -->
+        <section id="exam-section" class="exam-section">
+            <div class="card question-card">
+                <div class="question-header">
+                    <span id="question-number" class="badge">Pregunta 1 de 30</span>
+                    <span id="question-topic" class="topic-tag">Cinemática</span>
                 </div>
-                <div id="question-grid" class="question-grid">
-                    <!-- Dynamic Grid Buttons generated by JS -->
+                
+                <h3 id="question-text" class="question-text">Cargando pregunta...</h3>
+                
+                <div id="options-container" class="options-container">
+                    <!-- Las opciones se generan dinámicamente -->
                 </div>
-                <div class="legend">
-                    <div class="legend-item"><span class="dot current"></span> Actual</div>
-                    <div class="legend-item"><span class="dot answered"></span> Respondida</div>
-                    <div class="legend-item"><span class="dot pending"></span> Sin responder</div>
-                </div>
-                <div class="sidebar-actions">
-                    <button id="btn-submit-exam" class="btn btn-danger btn-block">Finalizar y Entregar Prueba</button>
-                </div>
-            </aside>
 
-            <!-- Main Question Area -->
-            <main class="exam-main">
-                <div class="question-card">
-                    <div class="question-meta">
-                        <span class="badge-topic" id="question-topic">Tema: Unidades de Medida</span>
-                        <span class="question-number" id="question-number-display">Pregunta 1 de 30</span>
+                <div class="navigation-buttons">
+                    <button id="btn-prev" class="btn btn-secondary" disabled><i class="fa-solid fa-arrow-left"></i> Anterior</button>
+                    <button id="btn-next" class="btn btn-primary">Siguiente <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navegador / Mapa de Preguntas -->
+        <aside class="sidebar-section">
+            <div class="card map-card">
+                <h4><i class="fa-solid fa-grid-2"></i> Mapa de Preguntas</h4>
+                <div id="question-map" class="question-map">
+                    <!-- Botones de mapa generados dinámicamente -->
+                </div>
+                
+                <div class="map-legend">
+                    <span class="legend-item"><span class="dot current"></span> Actual</span>
+                    <span class="legend-item"><span class="dot answered"></span> Respondida</span>
+                    <span class="legend-item"><span class="dot empty"></span> Pendiente</span>
+                </div>
+
+                <button id="btn-finish" class="btn btn-danger btn-block"><i class="fa-solid fa-paper-plane"></i> Finalizar Evaluación</button>
+            </div>
+        </aside>
+
+        <!-- Sección de Resultados (Oculta por defecto) -->
+        <section id="results-section" class="results-section hidden">
+            <div class="card results-card">
+                <i class="fa-solid fa-circle-check success-icon"></i>
+                <h2>Evaluación Completada</h2>
+                <p>Tu reporte detallado ha sido procesado correctamente.</p>
+                
+                <div class="score-grid">
+                    <div class="score-card">
+                        <span class="score-label">Puntaje Final</span>
+                        <span id="score-val" class="score-val">0 / 30</span>
                     </div>
-
-                    <div class="question-prompt" id="question-text">
-                        Cargando pregunta...
+                    <div class="score-card">
+                        <span class="score-label">Porcentaje</span>
+                        <span id="score-percent" class="score-val">0%</span>
                     </div>
-
-                    <div class="options-container" id="options-container">
-                        <!-- Dynamic Options generated by JS -->
-                    </div>
-
-                    <div class="question-footer">
-                        <button id="btn-prev" class="btn btn-secondary">← Anterior</button>
-                        <button id="btn-next" class="btn btn-primary">Siguiente →</button>
+                    <div class="score-card">
+                        <span class="score-label">Violaciones de Seguridad</span>
+                        <span id="security-violations" class="score-val warning">0</span>
                     </div>
                 </div>
-            </main>
-        </div>
-    </div>
 
-    <!-- Results Modal / Feedback Panel -->
-    <div id="results-modal" class="modal-overlay hidden">
-        <div class="modal-card result-card">
-            <div class="brand-header">
-                <span class="badge badge-success">Evaluación Finalizada</span>
-                <h1 id="result-student-name">Reporte de Resultados</h1>
-                <p>Simulador de Examen de Admisión Uniersitaria - Física</p>
-            </div>
-
-            <div class="results-summary-grid">
-                <div class="metric-box">
-                    <span class="metric-label">Puntaje Final</span>
-                    <span class="metric-value highlight" id="score-val">0 / 30</span>
-                </div>
-                <div class="metric-box">
-                    <span class="metric-label">Porcentaje de Acierto</span>
-                    <span class="metric-value" id="percent-val">0%</span>
-                </div>
-                <div class="metric-box">
-                    <span class="metric-label">Tiempo Empleado</span>
-                    <span class="metric-value" id="time-spent-val">00:00</span>
+                <div id="review-container" class="review-container">
+                    <h3><i class="fa-solid fa-square-poll-vertical"></i> Desglose de Respuestas</h3>
+                    <div id="review-list" class="review-list"></div>
                 </div>
             </div>
+        </section>
 
-            <div class="feedback-container">
-                <h3>Desglose y Retroalimentación Detallada</h3>
-                <div id="feedback-list" class="feedback-list">
-                    <!-- Dynamic Feedback Generated by JS -->
-                </div>
-            </div>
+    </main>
 
-            <div class="modal-footer">
-                <button id="btn-restart" class="btn btn-outline">Realizar un Nuevo Intento</button>
-            </div>
-        </div>
-    </div>
-
+    <!-- Vinculación del script funcional al final del body -->
     <script src="index.js"></script>
 </body>
 </html>

@@ -1,625 +1,257 @@
-// BANCO COMPLETO DE 30 PREGUNTAS DE FÍSICA PARA ACCESO UNIVERSITARIO
-const questionsBank = [
-    // 1. Unidades de medida en el SI y conversiones (1-3)
-    {
-        id: 1,
-        topic: "Unidades de Medida en el SI",
-        question: "1. ¿Cuál de las siguientes magnitudes corresponde a una unidad fundamental en el Sistema Internacional (SI)?",
-        options: ["A) Newton (N)", "B) Julio (J)", "C) Kelvin (K)", "D) Vatio (W)"],
-        answer: 2,
-        explanation: "El Kelvin (K) es una de las 7 unidades fundamentales del SI que mide la temperatura termodinámica. Las demás son derivadas."
-    },
-    {
-        id: 2,
-        topic: "Conversiones de Unidades",
-        question: "2. Una velocidad de 72 km/h equivale expresada en metros por segundo (m/s) en el SI a:",
-        options: ["A) 15 m/s", "B) 20 m/s", "C) 25 m/s", "D) 30 m/s"],
-        answer: 1,
-        explanation: "Para convertir de km/h a m/s se divide entre 3.6: 72 / 3.6 = 20 m/s."
-    },
-    {
-        id: 3,
-        topic: "Conversiones de Unidades",
-        question: "3. Si la masa de un objeto es de 0.05 kg, ¿cuál es su valor equivalente en gramos?",
-        options: ["A) 5 g", "B) 50 g", "C) 500 g", "D) 0.5 g"],
-        answer: 1,
-        explanation: "Como 1 kg = 1000 g, multiplicamos 0.05 kg × 1000 = 50 g."
-    },
-
-    // 2. Movimiento y trayectoria (4-6)
-    {
-        id: 4,
-        topic: "Movimiento y Trayectoria",
-        question: "4. Una partícula se desplaza partiendo del punto A, recorre un circuito cerrado y vuelve exactamente al mismo punto A. Indique el desplazamiento neto del objeto.",
-        options: ["A) Igual a la longitud total de la trayectoria", "B) Cero", "C) Mayor que la distancia recorrida", "D) Indeterminado"],
-        answer: 1,
-        explanation: "El desplazamiento es el vector posición final menos posición inicial. Si el punto final e inicial coinciden, el desplazamiento vectorialmente es cero."
-    },
-    {
-        id: 5,
-        topic: "Movimiento y Trayectoria",
-        question: "5. ¿Qué diferencia conceptual existe entre distancia recorrida y desplazamiento?",
-        options: [
-            "A) La distancia es un vector y el desplazamiento es un escalar.",
-            "B) La distancia es una magnitud escalar y el desplazamiento es una magnitud vectorial.",
-            "C) Ambas son magnitudes vectoriales pero con distinto módulo.",
-            "D) No existe ninguna diferencia, son términos equivalentes."
-        ],
-        answer: 1,
-        explanation: "La distancia es la longitud de la trayectoria (escalar), mientras que el desplazamiento define el cambio neto de posición mediante un vector."
-    },
-    {
-        id: 6,
-        topic: "Movimiento y Trayectoria",
-        question: "6. Si la trayectoria de un móvil es rectilínea sin cambiar el sentido del movimiento, el módulo del desplazamiento es:",
-        options: ["A) Menor que la distancia recorrida", "B) Igual a la distancia recorrida", "C) Cero", "D) El doble de la distancia recorrida"],
-        answer: 1,
-        explanation: "En un movimiento rectilíneo y unidireccional, la longitud de la trayectoria efectuada coincide numéricamente con el módulo del desplazamiento."
-    },
-
-    // 3. MRU (7-9)
-    {
-        id: 7,
-        topic: "Movimiento Rectilíneo Uniforme (MRU)",
-        question: "7. Un vehículo se desplaza en MRU con una velocidad constante de 15 m/s durante 40 segundos. ¿Qué distancia logra recorrer?",
-        options: ["A) 400 m", "B) 500 m", "C) 600 m", "D) 750 m"],
-        answer: 2,
-        explanation: "Aplicando la ecuación del MRU d = v × t: d = 15 m/s × 40 s = 600 m."
-    },
-    {
-        id: 8,
-        topic: "Movimiento Rectilíneo Uniforme (MRU)",
-        question: "8. En una gráfica Posición vs. Tiempo (x - t) de un cuerpo que experimenta MRU, la pendiente de la recta representa:",
-        options: ["A) La aceleración", "B) La velocidad", "C) La fuerza ejercida", "D) La distancia acumulada"],
-        answer: 1,
-        explanation: "En una gráfica posición-tiempo, la pendiente corresponde a la razón de cambio Δx/Δt, que es la velocidad del móvil."
-    },
-    {
-        id: 9,
-        topic: "Movimiento Rectilíneo Uniforme (MRU)",
-        question: "9. Dos automóviles A y B parten de un mismo punto en el mismo sentido con velocidades constantes de 20 m/s y 30 m/s. ¿Qué separación existe entre ellos a los 10 segundos?",
-        options: ["A) 50 m", "B) 100 m", "C) 150 m", "D) 300 m"],
-        answer: 1,
-        explanation: "Distancia A = 20×10 = 200 m. Distancia B = 30×10 = 300 m. Separación = 300 m - 200 m = 100 m."
-    },
-
-    // 4. MRUV (10-12)
-    {
-        id: 10,
-        topic: "Movimiento Rectilíneo Uniformemente Variado (MRUV)",
-        question: "10. Un móvil parte del reposo y se acelera uniformemente a razón de 3 m/s². ¿Cuál será su velocidad al cabo de 6 segundos?",
-        options: ["A) 9 m/s", "B) 12 m/s", "C) 18 m/s", "D) 24 m/s"],
-        answer: 2,
-        explanation: "Utilizando v_f = v_0 + a × t con v_0 = 0: v_f = 0 + (3 m/s² × 6 s) = 18 m/s."
-    },
-    {
-        id: 11,
-        topic: "Movimiento Rectilíneo Uniformemente Variado (MRUV)",
-        question: "11. Un vehículo frena con una desaceleración constante de 4 m/s² hasta detenerse por completo en 5 segundos. ¿Con qué velocidad inicial circulaba?",
-        options: ["A) 10 m/s", "B) 15 m/s", "C) 20 m/s", "D) 25 m/s"],
-        answer: 2,
-        explanation: "De v_f = v_0 - a × t, dado que v_f = 0: v_0 = a × t = 4 m/s² × 5 s = 20 m/s."
-    },
-    {
-        id: 12,
-        topic: "Movimiento Rectilíneo Uniformemente Variado (MRUV)",
-        question: "12. ¿Qué distancia recorre un objeto que parte del reposo y se acelera a 2 m/s² durante 10 segundos?",
-        options: ["A) 50 m", "B) 100 m", "C) 150 m", "D) 200 m"],
-        answer: 1,
-        explanation: "Usando d = v_0 × t + 0.5 × a × t² con v_0 = 0: d = 0.5 × 2 × (10)² = 100 m."
-    },
-
-    // 5. MCU (13-15)
-    {
-        id: 13,
-        topic: "Movimiento Circular Uniforme (MCU)",
-        question: "13. En el Movimiento Circular Uniforme (MCU), la magnitud que modifica continuamente la dirección de la velocidad tangencial se denomina:",
-        options: ["A) Aceleración angular", "B) Aceleración centrípeta", "C) Fuerza tangencial", "D) Velocidad escalar"],
-        answer: 1,
-        explanation: "La aceleración centrípeta está dirigida hacia el centro de la trayectoria y es responsable de modificar la dirección de la velocidad."
-    },
-    {
-        id: 14,
-        topic: "Movimiento Circular Uniforme (MCU)",
-        question: "14. Un disco gira realizando 120 revoluciones por minuto (rpm). Su velocidad angular expresada en rad/s es aproximada a:",
-        options: ["A) 2π rad/s", "B) 4π rad/s", "C) 6π rad/s", "D) 8π rad/s"],
-        answer: 1,
-        explanation: "120 rpm = 120 rev / 60 s = 2 rev/s. Multiplicando por 2π rad/rev da 4π rad/s."
-    },
-    {
-        id: 15,
-        topic: "Movimiento Circular Uniforme (MCU)",
-        question: "15. Si el período (T) de rotación de un móvil en MCU es de 0.2 segundos, su frecuencia (f) de giro es:",
-        options: ["A) 2 Hz", "B) 4 Hz", "C) 5 Hz", "D) 10 Hz"],
-        answer: 2,
-        explanation: "La frecuencia es el inverso del período f = 1 / T = 1 / 0.2 s = 5 Hz."
-    },
-
-    // 6. Caída Libre (16-18)
-    {
-        id: 16,
-        topic: "Caída Libre",
-        question: "16. Se deja caer un objeto desde el reposo desde lo alto de una torre. Despreciando la resistencia del aire (g = 10 m/s²), ¿qué velocidad posee tras 3 segundos de caída?",
-        options: ["A) 15 m/s", "B) 20 m/s", "C) 30 m/s", "D) 45 m/s"],
-        answer: 2,
-        explanation: "En caída libre v = g × t = 10 m/s² × 3 s = 30 m/s."
-    },
-    {
-        id: 17,
-        topic: "Caída Libre",
-        question: "17. Una piedra se lanza verticalmente hacia arriba con una velocidad inicial de 20 m/s (g = 10 m/s²). El tiempo alcanzado para su altura máxima es de:",
-        options: ["A) 1 s", "B) 2 s", "C) 3 s", "D) 4 s"],
-        answer: 1,
-        explanation: "En el punto más alto v_f = 0. De v_f = v_0 - g × t -> t = v_0 / g = 20 / 10 = 2 s."
-    },
-    {
-        id: 18,
-        topic: "Caída Libre",
-        question: "18. En el vacío, si se sueltan desde la misma altura de forma simultánea una pluma y una esfera de plomo:",
-        options: [
-            "A) La esfera cae primero por tener mayor masa.",
-            "B) La pluma cae primero por menor resistencia.",
-            "C) Ambos cuerpos llegan al suelo al mismo tiempo.",
-            "D) Depende de la superficie de contacto."
-        ],
-        answer: 2,
-        explanation: "Al no existir resistencia del aire en el vacío, todos los cuerpos sufren la misma aceleración de la gravedad e impactan al mismo tiempo."
-    },
-
-    // 7. Movimiento Parabólico (19-21)
-    {
-        id: 19,
-        topic: "Movimiento Parabólico",
-        question: "19. En un tiro parabólico, en el punto de altura máxima de la trayectoria, el valor de la componente vertical de la velocidad (Vy) es:",
-        options: ["A) Igual a la velocidad inicial total", "B) Cero", "C) Máximo", "D) Dependiente del ángulo"],
-        answer: 1,
-        explanation: "En la cúspide de la parábola, el móvil deja de subir y comienza a descender, anulándose temporalmente la componente vertical Vy = 0."
-    },
-    {
-        id: 20,
-        topic: "Movimiento Parabólico",
-        question: "20. El alcance horizontal máximo en un movimiento de proyectiles (manteniendo fija la velocidad inicial) se obtiene con un ángulo de lanzamiento de:",
-        options: ["A) 30°", "B) 45°", "C) 60°", "D) 90°"],
-        answer: 1,
-        explanation: "La fórmula de alcance horizontal contiene sen(2θ). El valor máximo de seno ocurre a 90°, lo que implica 2θ = 90° -> θ = 45°."
-    },
-    {
-        id: 21,
-        topic: "Movimiento Parabólico",
-        question: "21. En el movimiento parabólico sin fricción de aire, la componente horizontal de la velocidad (Vx) a lo largo del tiempo:",
-        options: [
-            "A) Permanece constante (MRU).",
-            "B) Aumenta continuamente.",
-            "C) Disminuye progresivamente hasta hacerse cero.",
-            "D) Varía según la gravedad."
-        ],
-        answer: 0,
-        explanation: "En el eje horizontal no actúa ninguna fuerza externa (fuerza de aceleración es cero), de modo que el movimiento en 'x' se comporta como un MRU puro."
-    },
-
-    // 8. Fuerzas (22-24)
-    {
-        id: 22,
-        topic: "Fuerzas y Dinámica",
-        question: "22. La unidad de medida de la fuerza en el Sistema Internacional es el Newton (N), el cual es equivalente a:",
-        options: ["A) kg · m / s", "B) kg · m / s²", "C) kg · m² / s²", "D) g · cm / s²"],
-        answer: 1,
-        explanation: "Por la segunda ley de Newton F = m × a, las unidades correspondientes son kg × m/s² = 1 N."
-    },
-    {
-        id: 23,
-        topic: "Fuerzas y Dinámica",
-        question: "23. La fuerza de fricción o rozamiento que se opone al inicio del movimiento de un objeto en reposo se conoce como:",
-        options: ["A) Fricción cinética", "B) Fuerza normal", "C) Fricción estática", "D) Tensión"],
-        answer: 2,
-        explanation: "La fricción estática actúa previniendo el deslizamiento relativo entre dos superficies en reposo."
-    },
-    {
-        id: 24,
-        topic: "Fuerzas y Dinámica",
-        question: "24. Un objeto descansa sobre una mesa horizontal. La fuerza perpendicular ejercida por la superficie sobre el cuerpo se denomina:",
-        options: ["A) Peso", "B) Tensión", "C) Fuerza Normal", "D) Empuje"],
-        answer: 2,
-        explanation: "La Fuerza Normal (N) es la fuerza de reacción ejercida por una superficie perpendicular sobre un cuerpo apoyado en ella."
-    },
-
-    // 9. Leyes de Newton (25-27)
-    {
-        id: 25,
-        topic: "Leyes de Newton",
-        question: "25. Un cuerpo mantendrá su estado de reposo o de movimiento rectilíneo uniforme a menos que actúe sobre él una fuerza neta no nula. Este enunciado corresponde a:",
-        options: ["A) Primera Ley de Newton (Inercia)", "B) Segunda Ley de Newton", "C) Tercera Ley de Newton", "D) Ley de Gravitación"],
-        answer: 0,
-        explanation: "Es la definición formal de la Primera Ley de Newton o Principio de Inercia."
-    },
-    {
-        id: 26,
-        topic: "Leyes de Newton",
-        question: "26. Al aplicar una fuerza neta de 50 N sobre un cuerpo de 10 kg de masa, la aceleración producida equivale a:",
-        options: ["A) 2 m/s²", "B) 5 m/s²", "C) 10 m/s²", "D) 500 m/s²"],
-        answer: 1,
-        explanation: "Usando F = m × a -> a = F / m = 50 N / 10 kg = 5 m/s²."
-    },
-    {
-        id: 27,
-        topic: "Leyes de Newton",
-        question: "27. Cuando el cuerpo A ejerce una fuerza sobre el cuerpo B, el cuerpo B ejerce simultáneamente una fuerza de igual magnitud y sentido opuesto sobre A. Esto se conoce como:",
-        options: ["A) Principio de Inercia", "B) Ley Fundamental de la Dinámica", "C) Principio de Acción y Reacción", "D) Ley de Conservación de Energía"],
-        answer: 2,
-        explanation: "Corresponde a la Tercera Ley de Newton o Principio de Acción y Reacción."
-    },
-
-    // 10. Trabajo, Potencia y Energía (28-30)
-    {
-        id: 28,
-        topic: "Trabajo, Potencia y Energía",
-        question: "28. Un bloque es arrastrado 5 metros sobre una superficie horizontal mediante una fuerza paralela al desplazamiento de 20 N. ¿Qué trabajo se ha realizado?",
-        options: ["A) 40 J", "B) 80 J", "C) 100 J", "D) 200 J"],
-        answer: 2,
-        explanation: "El trabajo mecánico es W = F × d × cos(0°) = 20 N × 5 m × 1 = 100 Julios (J)."
-    },
-    {
-        id: 29,
-        topic: "Trabajo, Potencia y Energía",
-        question: "29. ¿Cuál es la energía cinética de un móvil de masa 2 kg que avanza con una velocidad constante de 4 m/s?",
-        options: ["A) 8 J", "B) 16 J", "C) 32 J", "D) 64 J"],
-        answer: 1,
-        explanation: "La Energía Cinética es Ec = 0.5 × m × v² = 0.5 × 2 kg × (4 m/s)² = 16 Julios (J)."
-    },
-    {
-        id: 30,
-        topic: "Trabajo, Potencia y Energía",
-        question: "30. La rapidez con la que se realiza un trabajo mecánico se define técnicamente como:",
-        options: ["A) Fuerza", "B) Impulso", "C) Potencia", "D) Presión"],
-        answer: 2,
-        explanation: "La Potencia (medida en Vatios o Watts) expresa la cantidad de trabajo realizado por unidad de tiempo P = W / t."
-    }
+// BANCO DE PREGUNTAS (30 PREGUNTAS DE FÍSICA APLICADA)
+const questions = [
+    { id: 1, topic: "Sistemas de Unidades", question: "¿Cuál es la unidad fundamental de masa en el Sistema Internacional (SI)?", options: ["Gramo (g)", "Kilogramo (kg)", "Libra (lb)", "Newton (N)"], answer: 1 },
+    { id: 2, topic: "Cinemática", question: "Un vehículo se desplaza a una velocidad constante de 72 km/h. ¿Cuál es su equivalencia en m/s?", options: ["15 m/s", "20 m/s", "25 m/s", "30 m/s"], answer: 1 },
+    { id: 3, topic: "Cinemática", question: "¿Qué representa la pendiente de una gráfica de Posición vs. Tiempo (x vs. t)?", options: ["Aceleración", "Velocidad", "Fuerza", "Desplazamiento total"], answer: 1 },
+    { id: 4, topic: "Cinemática", question: "Un objeto en caída libre cerca de la superficie terrestre experimenta una aceleración constante aproximadamente igual a:", options: ["0 m/s²", "9.8 m/s²", "100 m/s²", "Variable respecto a la masa"], answer: 1 },
+    { id: 5, topic: "Dinámica", question: "Según la Primera Ley de Newton, un cuerpo mantendrá su estado de reposo o movimiento rectilíneo uniforme a menos que:", options: ["Se le aplique energía térmica", "Actúe una fuerza neta externa sobre él", "Aumente su masa", "Su aceleración sea distinta de cero"], answer: 1 },
+    { id: 6, topic: "Dinámica", question: "¿Cuál es la expresión matemática de la Segunda Ley de Newton?", options: ["F = m / a", "F = m · a", "F = m · v", "F = 0.5 · m · a²"], answer: 1 },
+    { id: 7, topic: "Dinámica", question: "La unidad de medida de la fuerza en el Sistema Internacional es el Newton (N), el cual equivale a:", options: ["kg · m/s", "kg · m/s²", "kg² · m/s", "g · cm/s²"], answer: 1 },
+    { id: 8, topic: "Trabajo y Energía", question: "¿Qué trabajo realiza una fuerza de 50 N al desplazar un objeto una distancia de 4 metros en su misma dirección?", options: ["12.5 Joules", "200 Joules", "54 Joules", "100 Joules"], answer: 1 },
+    { id: 9, topic: "Trabajo y Energía", question: "La energía asociada a la posición o configuración de un cuerpo respecto a un campo gravitatorio se denomina:", options: ["Energía Cinética", "Energía Potencial Gravitatoria", "Energía Térmica", "Energía Mecánica Total"], answer: 1 },
+    { id: 10, topic: "Trabajo y Energía", question: "¿Cuál es la fórmula fundamental de la Energía Cinética?", options: ["E_c = m · g · h", "E_c = 1/2 · m · v²", "E_c = F · d", "E_c = m · v"], answer: 1 },
+    { id: 11, topic: "Dinámica", question: "La Tercera Ley de Newton establece que a toda acción corresponde una reacción de igual magnitud pero en sentido:", options: ["Perpendicular", "Opuesto", "Tangencial", "Aleatorio"], answer: 1 },
+    { id: 12, topic: "Cinemática", question: "En un Movimiento Circular Uniforme (MCU), la magnitud de la velocidad permanece constante, pero su dirección cambia continuamente debido a la:", options: ["Aceleración tangencial", "Aceleración centrípeta", "Fuerza de rozamiento", "Inercia"], answer: 1 },
+    { id: 13, topic: "Trabajo y Potencia", question: "La Potencia Mecánica se define operacionalmente como la rapidez con la que se realiza:", options: ["Una fuerza", "Un trabajo", "Un cambio de aceleración", "Un impulso"], answer: 1 },
+    { id: 14, topic: "Potencia", question: "La unidad de potencia en el Sistema Internacional es el Watt (W), que equivale a:", options: ["1 Joule / segundo", "1 Newton / metro", "1 Pascal · segundo", "1 Joule · segundo"], answer: 0 },
+    { id: 15, topic: "Estática", question: "Para que un cuerpo rígido se encuentre en equilibrio de rotación, la suma de sus momentos de fuerza o torques debe ser igual a:", options: ["La masa total", "Cero", "La aceleración de la gravedad", "La fuerza normal"], answer: 1 },
+    { id: 16, topic: "Hidrostática", question: "¿Cómo se define el concepto de Presión en la física de fluidos?", options: ["Fuerza multiplicada por Área", "Fuerza dividida entre Área", "Masa dividida entre Volumen", "Volumen por Densidad"], answer: 1 },
+    { id: 17, topic: "Hidrostática", question: "El Principio de Arquímedes establece que todo cuerpo sumergido en un fluido experimenta un empuje vertical hacia arriba igual al:", options: ["Peso del cuerpo", "Peso del fluido desalojado", "Volumen del cuerpo", "Área de la base"], answer: 1 },
+    { id: 18, topic: "Termodinámica", question: "¿A qué temperatura en la escala Kelvin equivale el cero absoluto en la escala Celsius (-273.15 °C)?", options: ["-273.15 K", "0 K", "273.15 K", "100 K"], answer: 1 },
+    { id: 19, topic: "Termodinámica", question: "El mecanismo de transferencia de calor que no requiere de un medio material para propagarse se llama:", options: ["Conducción", "Convección", "Radiación", "Evaporación"], answer: 2 },
+    { id: 20, topic: "Electrostática", question: "La Ley de Coulomb determina que la fuerza eléctrica entre dos cargas puntuales es inversamente proporcional al:", options: ["Cuadrado de la distancia entre ellas", "Producto de las cargas", "Valor de la constante dieléctrica", "Tiempo de interacción"], answer: 0 },
+    { id: 21, topic: "Circuitos Eléctricos", question: "¿Cuál es la expresión matemática básica de la Ley de Ohm?", options: ["V = I · R", "V = I / R", "R = V · I", "I = V · R"], answer: 0 },
+    { id: 22, topic: "Circuitos Eléctricos", question: "En un circuito eléctrico en serie, ¿qué magnitud permanece constante a través de todos los componentes?", options: ["El voltaje", "La corriente eléctrica (Intensidad)", "La resistencia total", "La potencia disipada"], answer: 1 },
+    { id: 23, topic: "Ondas", question: "¿Cómo se denomina al tiempo que tarda una onda en completar un ciclo completo?", options: ["Frecuencia", "Longitud de onda", "Período", "Amplitud"], answer: 2 },
+    { id: 24, topic: "Ondas", question: "La relación recíproca o inversa del período de una onda (1/T) se conoce como:", options: ["Amplitud", "Velocidad de fase", "Frecuencia", "Celeridad"], answer: 2 },
+    { id: 25, topic: "Óptica", question: "El cambio de dirección que experimenta un rayo de luz al pasar de un medio transparente a otro con diferente índice de refracción se denomina:", options: ["Reflexión", "Refracción", "Difracción", "Polarización"], answer: 1 },
+    { id: 26, topic: "Vectores", question: "Un vector tiene tres características fundamentales que lo definen por completo: magnitud, dirección y:", options: ["Masa", "Sentido", "Punto de corte", "Escalar"], answer: 1 },
+    { id: 27, topic: "Vectores", question: "El producto escalar de dos vectores perpendiculares entre sí es siempre igual a:", options: ["Uno", "El producto de sus magnitudes", "Cero", "Un vector unitario"], answer: 2 },
+    { id: 28, topic: "Conservación", question: "En un sistema aislado donde solo actúan fuerzas conservativas, se mantiene constante:", options: ["Solo la Energía Cinética", "La Energía Mecánica Total", "La masa del sistema", "La velocidad angular"], answer: 1 },
+    { id: 29, topic: "Mecánica Celeste", question: "Las Leyes de Kepler describen el movimiento de los planetas alrededor del Sol. La primera ley establece que las órbitas son:", options: ["Circulares perfectas", "Elípticas", "Parabólicas", "Espirales"], answer: 1 },
+    { id: 30, topic: "Física Moderna", question: "La constante de proporcionalidad fundamental en la física cuántica que relaciona la energía de un fotón con su frecuencia es la constante de:", options: ["Newton", "Planck", "Einstein", "Boltzmann"], answer: 1 }
 ];
 
-// STATE MANAGEMENT
-const EXAM_TOTAL_TIME_SECONDS = 30 * 90; // 30 questions * 90 seconds = 2700s (45 minutes)
-let state = {
-    studentName: "",
-    currentQuestionIndex: 0,
-    userAnswers: new Array(questionsBank.length).fill(null),
-    timeRemaining: EXAM_TOTAL_TIME_SECONDS,
-    isExamSubmitted: false,
-    startTime: null,
-    timerInterval: null
-};
+// ESTADO DE LA APLICACIÓN Y PERSISTENCIA (localStorage)
+let currentIndex = 0;
+let userAnswers = JSON.parse(localStorage.getItem('eval_answers')) || {};
+let violationsCount = parseInt(localStorage.getItem('eval_violations')) || 0;
+let timeRemaining = parseInt(localStorage.getItem('eval_timer')) || 3600; // 60 minutos
+let timerInterval = null;
 
-// DOM ELEMENTS
-const welcomeModal = document.getElementById('welcome-modal');
-const examApp = document.getElementById('exam-app');
-const resultsModal = document.getElementById('results-modal');
-const studentNameInput = document.getElementById('student-name');
-const btnStart = document.getElementById('btn-start');
-const displayStudentName = document.getElementById('display-student-name');
-const timerDisplay = document.getElementById('timer-display');
-const timerCard = document.getElementById('timer-card');
-const questionGrid = document.getElementById('question-grid');
-const answeredCounter = document.getElementById('answered-counter');
+// ELEMENTOS DEL DOM
+const overlay = document.getElementById('fullscreen-overlay');
+const btnEnter = document.getElementById('btn-enter');
+const warningBanner = document.getElementById('warning-banner');
+
+const questionNumber = document.getElementById('question-number');
 const questionTopic = document.getElementById('question-topic');
-const questionNumberDisplay = document.getElementById('question-number-display');
 const questionText = document.getElementById('question-text');
 const optionsContainer = document.getElementById('options-container');
+
 const btnPrev = document.getElementById('btn-prev');
 const btnNext = document.getElementById('btn-next');
-const btnSubmitExam = document.getElementById('btn-submit-exam');
-const btnRestart = document.getElementById('btn-restart');
+const btnFinish = document.getElementById('btn-finish');
 
-// INITIALIZATION & EVENT LISTENERS
+const progressText = document.getElementById('progress-text');
+const progressBar = document.getElementById('progress-bar');
+const timerDisplay = document.getElementById('timer');
+const questionMap = document.getElementById('question-map');
+
+const examSection = document.getElementById('exam-section');
+const sidebarSection = document.querySelector('.sidebar-section');
+const resultsSection = document.getElementById('results-section');
+
+// INICIALIZACIÓN
 document.addEventListener('DOMContentLoaded', () => {
-    initKioskSecurity();
-    checkLocalStorageState();
-
-    btnStart.addEventListener('click', handleStartExam);
-    btnPrev.addEventListener('click', goToPreviousQuestion);
-    btnNext.addEventListener('click', goToNextQuestion);
-    btnSubmitExam.addEventListener('click', confirmSubmitExam);
-    btnRestart.addEventListener('click', resetExamState);
+    initQuestionMap();
+    renderQuestion(currentIndex);
+    updateProgress();
+    setupSecurityEvents();
 });
 
-// KIOSK MODE & ANTI-CHEATING PROTECTION SECURITY
-function initKioskSecurity() {
-    // Prevent Right Click Context Menu
+// GESTIÓN DE PANTALLA COMPLETA Y KIOSKO
+btnEnter.addEventListener('click', () => {
+    enterFullscreen();
+    overlay.classList.add('hidden');
+    startTimer();
+});
+
+function enterFullscreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+            console.warn(`Error al activar pantalla completa: ${err.message}`);
+        });
+    }
+}
+
+// CONTROLES DE SEGURIDAD
+function setupSecurityEvents() {
+    // Detectar pérdida de foco / cambio de pestaña
+    window.addEventListener('blur', () => {
+        registerViolation();
+    });
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            registerViolation();
+        }
+    });
+
+    // Deshabilitar menú contextual (Click derecho)
     document.addEventListener('contextmenu', (e) => e.preventDefault());
 
-    // Prevent Copy / Cut / Paste / Select
-    document.addEventListener('copy', (e) => e.preventDefault());
-    document.addEventListener('cut', (e) => e.preventDefault());
-    document.addEventListener('paste', (e) => e.preventDefault());
-
-    // Prevent Keyboard Shortcuts (PrintScreen, F12, Ctrl+Shift+I, Ctrl+C, Ctrl+U, etc.)
+    // Bloquear atajos de teclado de copia y captura
     document.addEventListener('keydown', (e) => {
-        // Prevent PrintScreen key
-        if (e.key === 'PrintScreen') {
+        if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'a')) {
             e.preventDefault();
-            alert('Las capturas de pantalla están deshabilitadas en esta evaluación.');
         }
-
-        // Prevent Ctrl+P, Ctrl+S, Ctrl+U, Ctrl+Shift+I, F12
-        if (
-            (e.ctrlKey && (e.key === 'p' || e.key === 'P' || e.key === 's' || e.key === 'S' || e.key === 'u' || e.key === 'U')) ||
-            (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
-            e.key === 'F12'
-        ) {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
             e.preventDefault();
         }
     });
-
-    // Detect Fullscreen Change and enforce lock
-    document.addEventListener('fullscreenchange', () => {
-        if (!document.fullscreenElement && !state.isExamSubmitted && examApp.classList.contains('hidden') === false) {
-            // Re-request fullscreen if exam is ongoing
-            requestFullscreen();
-        }
-    });
 }
 
-function requestFullscreen() {
-    const docEl = document.documentElement;
-    if (docEl.requestFullscreen) {
-        docEl.requestFullscreen().catch(() => {});
-    } else if (docEl.webkitRequestFullscreen) {
-        docEl.webkitRequestFullscreen();
-    } else if (docEl.msRequestFullscreen) {
-        docEl.msRequestFullscreen();
-    }
+function registerViolation() {
+    violationsCount++;
+    localStorage.setItem('eval_violations', violationsCount);
+    warningBanner.classList.remove('hidden');
+    setTimeout(() => warningBanner.classList.add('hidden'), 5000);
 }
 
-function exitFullscreenMode() {
-    if (document.exitFullscreen && document.fullscreenElement) {
-        document.exitFullscreen().catch(() => {});
-    }
-}
-
-// PERSISTENCE & AUTOSAVE (LOCAL STORAGE)
-function checkLocalStorageState() {
-    const savedState = localStorage.getItem('physics_exam_state');
-    if (savedState) {
-        try {
-            const parsed = JSON.parse(savedState);
-            if (!parsed.isExamSubmitted) {
-                // Restore state
-                state = parsed;
-                welcomeModal.classList.add('hidden');
-                examApp.classList.remove('hidden');
-                displayStudentName.textContent = state.studentName;
-                startTimer();
-                renderQuestionGrid();
-                loadQuestion(state.currentQuestionIndex);
-                requestFullscreen();
-            } else {
-                // Show results if previously finished
-                state = parsed;
-                welcomeModal.classList.add('hidden');
-                showResultsModal();
-            }
-        } catch (e) {
-            console.error("Error cargando estado de almacenamiento:", e);
-        }
-    }
-}
-
-function saveStateToLocalStorage() {
-    localStorage.setItem('physics_exam_state', JSON.stringify(state));
-}
-
-// EXAM FLOW CONTROLLERS
-function handleStartExam() {
-    const name = studentNameInput.value.trim();
-    if (!name) {
-        alert("Por favor, ingrese su nombre completo para comenzar.");
-        return;
-    }
-
-    state.studentName = name;
-    state.startTime = Date.now();
-    displayStudentName.textContent = name;
-
-    welcomeModal.classList.add('hidden');
-    examApp.classList.remove('hidden');
-
-    requestFullscreen();
-    saveStateToLocalStorage();
-    startTimer();
-    renderQuestionGrid();
-    loadQuestion(0);
-}
-
+// TEMPORIZADOR
 function startTimer() {
-    updateTimerDisplay();
-    state.timerInterval = setInterval(() => {
-        state.timeRemaining--;
-        saveStateToLocalStorage();
-        updateTimerDisplay();
+    if (timerInterval) return;
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        localStorage.setItem('eval_timer', timeRemaining);
+        
+        let minutes = Math.floor(timeRemaining / 60);
+        let seconds = timeRemaining % 60;
+        timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
-        if (state.timeRemaining <= 0) {
-            clearInterval(state.timerInterval);
-            alert("¡El tiempo del examen ha expirado! Sus respuestas se enviarán automáticamente.");
-            submitExam();
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            finishEvaluation();
         }
     }, 1000);
 }
 
-function updateTimerDisplay() {
-    const minutes = Math.floor(state.timeRemaining / 60);
-    const seconds = state.timeRemaining % 60;
-    const formatted = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    timerDisplay.textContent = formatted;
-
-    if (state.timeRemaining < 300) { // Less than 5 minutes left
-        timerCard.classList.add('warning');
-    }
-}
-
-// RENDER QUESTION GRID & NAVIGATION
-function renderQuestionGrid() {
-    questionGrid.innerHTML = '';
-    let answeredCount = 0;
-
-    questionsBank.forEach((_, idx) => {
-        const btn = document.createElement('button');
-        btn.classList.add('grid-btn');
-        btn.textContent = idx + 1;
-
-        if (idx === state.currentQuestionIndex) {
-            btn.classList.add('active');
-        }
-
-        if (state.userAnswers[idx] !== null) {
-            btn.classList.add('answered');
-            answeredCount++;
-        }
-
-        btn.addEventListener('click', () => {
-            saveAnswer();
-            state.currentQuestionIndex = idx;
-            loadQuestion(idx);
-        });
-
-        questionGrid.appendChild(btn);
-    });
-
-    answeredCounter.textContent = `${answeredCount} / ${questionsBank.length} Resp.`;
-}
-
-function loadQuestion(index) {
-    state.currentQuestionIndex = index;
-    const q = questionsBank[index];
-
-    questionTopic.textContent = `Tema: ${q.topic}`;
-    questionNumberDisplay.textContent = `Pregunta ${index + 1} de ${questionsBank.length}`;
+// RENDERIZADO DE PREGUNTAS
+function renderQuestion(index) {
+    const q = questions[index];
+    questionNumber.textContent = `Pregunta ${index + 1} de ${questions.length}`;
+    questionTopic.textContent = q.topic;
     questionText.textContent = q.question;
 
     optionsContainer.innerHTML = '';
-    const prefixes = ["A", "B", "C", "D"];
-
-    q.options.forEach((optText, optIdx) => {
+    q.options.forEach((opt, optIndex) => {
         const optionDiv = document.createElement('div');
-        optionDiv.classList.add('option-item');
-        if (state.userAnswers[index] === optIdx) {
-            optionDiv.classList.add('selected');
-        }
-
+        optionDiv.className = `option-item ${userAnswers[index] === optIndex ? 'selected' : ''}`;
         optionDiv.innerHTML = `
-            <div class="option-prefix">${prefixes[optIdx]}</div>
-            <div class="option-label">${optText.replace(/^[A-D]\)\s*/, '')}</div>
+            <input type="radio" name="opt" id="opt-${optIndex}" ${userAnswers[index] === optIndex ? 'checked' : ''}>
+            <label for="opt-${optIndex}">${opt}</label>
         `;
-
-        optionDiv.addEventListener('click', () => {
-            state.userAnswers[index] = optIdx;
-            saveStateToLocalStorage();
-            loadQuestion(index);
-            renderQuestionGrid();
-        });
-
+        optionDiv.addEventListener('click', () => selectOption(index, optIndex));
         optionsContainer.appendChild(optionDiv);
     });
 
-    // Update Navigation Buttons State
+    // Estado de botones de navegación
     btnPrev.disabled = index === 0;
-    btnNext.textContent = index === questionsBank.length - 1 ? "Finalizar" : "Siguiente →";
-
-    renderQuestionGrid();
+    btnNext.textContent = index === questions.length - 1 ? "Revisar / Guardar" : "Siguiente";
+    updateMapHighlight();
 }
 
-function saveAnswer() {
-    saveStateToLocalStorage();
+function selectOption(qIndex, optIndex) {
+    userAnswers[qIndex] = optIndex;
+    localStorage.setItem('eval_answers', JSON.stringify(userAnswers));
+    renderQuestion(qIndex);
+    updateProgress();
 }
 
-function goToPreviousQuestion() {
-    if (state.currentQuestionIndex > 0) {
-        loadQuestion(state.currentQuestionIndex - 1);
+// NAVEGACIÓN
+btnPrev.addEventListener('click', () => {
+    if (currentIndex > 0) {
+        currentIndex--;
+        renderQuestion(currentIndex);
     }
-}
+});
 
-function goToNextQuestion() {
-    if (state.currentQuestionIndex < questionsBank.length - 1) {
-        loadQuestion(state.currentQuestionIndex + 1);
-    } else {
-        confirmSubmitExam();
+btnNext.addEventListener('click', () => {
+    if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        renderQuestion(currentIndex);
     }
+});
+
+// MAPA DE PREGUNTAS
+function initQuestionMap() {
+    questionMap.innerHTML = '';
+    questions.forEach((_, i) => {
+        const btn = document.createElement('button');
+        btn.className = `map-btn ${userAnswers[i] !== undefined ? 'answered' : ''}`;
+        btn.textContent = i + 1;
+        btn.addEventListener('click', () => {
+            currentIndex = i;
+            renderQuestion(currentIndex);
+        });
+        questionMap.appendChild(btn);
+    });
 }
 
-function confirmSubmitExam() {
-    const unanswered = state.userAnswers.filter(ans => ans === null).length;
-    let message = "¿Está seguro de que desea finalizar y entregar el examen?";
-    if (unanswered > 0) {
-        message = `Tiene ${unanswered} pregunta(s) sin responder. ¿Está seguro de finalizar?`;
+function updateMapHighlight() {
+    const buttons = questionMap.querySelectorAll('.map-btn');
+    buttons.forEach((btn, i) => {
+        btn.classList.remove('current');
+        if (i === currentIndex) btn.classList.add('current');
+        if (userAnswers[i] !== undefined) btn.classList.add('answered');
+    });
+}
+
+function updateProgress() {
+    const answeredCount = Object.keys(userAnswers).length;
+    progressText.textContent = `${answeredCount} / ${questions.length}`;
+    const percent = (answeredCount / questions.length) * 100;
+    progressBar.style.width = `${percent}%`;
+}
+
+// FINALIZACIÓN Y CÁLCULO DE RESULTADOS
+btnFinish.addEventListener('click', () => {
+    if (confirm("¿Estás seguro de finalizar la evaluación? Una vez enviada no podrás cambiar tus respuestas.")) {
+        finishEvaluation();
     }
+});
 
-    if (confirm(message)) {
-        submitExam();
-    }
-}
-
-function submitExam() {
-    clearInterval(state.timerInterval);
-    state.isExamSubmitted = true;
-    saveStateToLocalStorage();
-
-    examApp.classList.add('hidden');
-    exitFullscreenMode();
-    showResultsModal();
-}
-
-// SHOW RESULTS & DETAILED FEEDBACK
-function showResultsModal() {
-    resultsModal.classList.remove('hidden');
-    document.getElementById('result-student-name').textContent = `Reporte de: ${state.studentName}`;
+function finishEvaluation() {
+    clearInterval(timerInterval);
+    examSection.classList.add('hidden');
+    sidebarSection.classList.add('hidden');
+    resultsSection.classList.remove('hidden');
 
     let score = 0;
-    questionsBank.forEach((q, idx) => {
-        if (state.userAnswers[idx] === q.answer) {
-            score++;
-        }
-    });
+    const reviewList = document.getElementById('review-list');
+    reviewList.innerHTML = '';
 
-    const percentage = Math.round((score / questionsBank.length) * 100);
-    const timeSpentSeconds = EXAM_TOTAL_TIME_SECONDS - state.timeRemaining;
-    const minutesSpent = Math.floor(timeSpentSeconds / 60);
-    const secondsSpent = timeSpentSeconds % 60;
+    questions.forEach((q, i) => {
+        const isCorrect = userAnswers[i] === q.answer;
+        if (isCorrect) score++;
 
-    document.getElementById('score-val').textContent = `${score} / ${questionsBank.length}`;
-    document.getElementById('percent-val').textContent = `${percentage}%`;
-    document.getElementById('time-spent-val').textContent = `${minutesSpent}m ${secondsSpent}s`;
-
-    // Render Detailed Feedback List
-    const feedbackList = document.getElementById('feedback-list');
-    feedbackList.innerHTML = '';
-
-    questionsBank.forEach((q, idx) => {
-        const userAnsIdx = state.userAnswers[idx];
-        const isCorrect = userAnsIdx === q.answer;
-        const prefixes = ["A", "B", "C", "D"];
-
-        const userAnsText = userAnsIdx !== null ? q.options[userAnsIdx] : "Sin responder";
-        const correctAnsText = q.options[q.answer];
-
-        const item = document.createElement('div');
-        item.classList.add('feedback-item');
-        item.innerHTML = `
-            <div class="feedback-header ${isCorrect ? 'correct' : 'incorrect'}">
-                <span>Pregunta ${idx + 1}: ${q.topic}</span>
-                <span>${isCorrect ? '✓ Correcto (+1.0)' : '✗ Incorrecto (0.0)'}</span>
-            </div>
-            <p style="font-size: 0.95rem; font-weight: 600; margin-bottom: 6px;">${q.question}</p>
-            <p style="font-size: 0.85rem; color: #475569;"><strong>Tu respuesta:</strong> ${userAnsText}</p>
-            ${!isCorrect ? `<p style="font-size: 0.85rem; color: #16a34a;"><strong>Respuesta correcta:</strong> ${correctAnsText}</p>` : ''}
-            <div class="feedback-explanation">
-                <strong>Justificación pedagógica:</strong> ${q.explanation}
-            </div>
+        const reviewItem = document.createElement('div');
+        reviewItem.className = `review-item ${isCorrect ? 'correct' : 'incorrect'}`;
+        reviewItem.innerHTML = `
+            <p><strong>${i + 1}. ${q.question}</strong></p>
+            <p>Tu respuesta: ${userAnswers[i] !== undefined ? q.options[userAnswers[i]] : '<em>Sin responder</em>'}</p>
+            <p>Respuesta correcta: <strong>${q.options[q.answer]}</strong></p>
         `;
-
-        feedbackList.appendChild(item);
+        reviewList.appendChild(reviewItem);
     });
-}
 
-function resetExamState() {
-    if (confirm("¿Desea reiniciar completamente el simulador? Se borrarán las respuestas guardadas.")) {
-        localStorage.removeItem('physics_exam_state');
-        location.reload();
-    }
+    document.getElementById('score-val').textContent = `${score} / ${questions.length}`;
+    document.getElementById('score-percent').textContent = `${((score / questions.length) * 100).toFixed(1)}%`;
+    document.getElementById('security-violations').textContent = violationsCount;
+
+    // Limpiar almacenamiento local al finalizar
+    localStorage.removeItem('eval_answers');
+    localStorage.removeItem('eval_timer');
+    localStorage.removeItem('eval_violations');
 }

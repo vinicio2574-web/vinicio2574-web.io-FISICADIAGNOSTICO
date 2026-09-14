@@ -3,139 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma de Evaluación - Física</title>
-    <!-- Hoja de estilos externa -->
-    <link rel="stylesheet" href="index.css">
-    <!-- Font Awesome para Iconos -->
+    <title>Evaluación de Física - Acceso Universitario</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Overlay para Forzar Pantalla Completa (Modo Kiosko) -->
-    <div id="fullscreen-overlay" class="overlay active">
-        <div class="overlay-card">
-            <i class="fa-solid fa-shield-halved security-icon"></i>
-            <h2>Evaluación Controlada de Física</h2>
-            <p>Para garantizar la integridad académica, esta evaluación se ejecuta en <strong>modo pantalla completa</strong> con monitoreo activo de seguridad.</p>
-            <button id="btn-enter" class="btn btn-primary"><i class="fa-solid fa-expand"></i> Iniciar / Continuar Evaluación</button>
+    <!-- OVERLAY INICIAL (PANTALLA COMPLETA OBLIGATORIA) -->
+    <div id="start-overlay" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-icon-wrapper">
+                <i class="fas fa-shield-halved"></i>
+            </div>
+            <h2>Examen de Admisión Segura</h2>
+            <p>La evaluación consta de <strong>40 preguntas</strong> (teóricas y prácticas) y dispones de <strong>1 hora y 10 segundos</strong>. El sistema activará el modo de pantalla completa y registrará cualquier intento de salir o usar accesos no permitidos.</p>
+            <button id="btn-start" class="btn btn-accent w-100" style="padding: 0.9rem;">
+                <i class="fas fa-expand"></i> Iniciar Evaluación
+            </button>
         </div>
     </div>
 
-    <!-- Advertencia de Salida / Enfoque -->
-    <div id="warning-banner" class="warning-banner hidden">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        <span><strong>¡ADVERTENCIA DE SEGURIDAD!</strong> Se ha detectado pérdida de foco o intento de cambio de pestaña. Esta acción queda registrada en la bitácora.</span>
+    <!-- OVERLAY POR PERDIDA DE FOCO / SEGURIDAD -->
+    <div id="block-overlay" class="modal-overlay hidden">
+        <div class="modal-box danger">
+            <div class="modal-icon-wrapper">
+                <i class="fas fa-triangle-exclamation"></i>
+            </div>
+            <h2>Advertencia de Seguridad</h2>
+            <p>Se ha registrado un intento no permitido (cambio de ventana, captura o uso de atajos de teclado). Esta acción queda registrada en tu reporte final.</p>
+            <button id="btn-unlock" class="btn btn-danger w-100">Reanudar Examen</button>
+        </div>
     </div>
 
-    <!-- Encabezado de la Plataforma -->
-    <header class="header">
-        <div class="header-container">
-            <div class="brand">
-                <i class="fa-solid fa-atom brand-icon"></i>
-                <div class="brand-text">
-                    <h1>Evaluación de Física General</h1>
-                    <span class="subtext">Sistema de Evaluación Académica Continua</span>
+    <!-- ENCABEZADO -->
+    <nav class="navbar">
+        <div class="brand">
+            <i class="fas fa-atom"></i>
+            <div class="brand-text">
+                <h1>Evaluación Nacional de Física General</h1>
+                <p>Plataforma de Admisión Académica</p>
+            </div>
+        </div>
+        <div class="header-widgets">
+            <div class="widget">
+                <i class="far fa-clock"></i>
+                <div>
+                    <span class="widget-lbl">Tiempo Restante</span>
+                    <span id="timer" class="widget-val">60:10</span>
                 </div>
             </div>
-            
-            <div class="status-panel">
-                <div class="status-card">
-                    <i class="fa-solid fa-clock"></i>
-                    <div>
-                        <span class="label">Tiempo Restante</span>
-                        <div id="timer" class="value">60:00</div>
-                    </div>
-                </div>
-                <div class="status-card">
-                    <i class="fa-solid fa-list-check"></i>
-                    <div>
-                        <span class="label">Progreso</span>
-                        <div id="progress-text" class="value">0 / 30</div>
-                    </div>
+            <div class="widget">
+                <i class="fas fa-list-check"></i>
+                <div>
+                    <span class="widget-lbl">Progreso</span>
+                    <span id="prog-val" class="widget-val">0 / 40</span>
                 </div>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <!-- Barra de Progreso Visual -->
-    <div class="progress-bar-container">
-        <div id="progress-bar" class="progress-bar-fill" style="width: 0%;"></div>
+    <div id="alert-banner" class="banner-alert hidden">
+        <i class="fas fa-exclamation-triangle"></i> ¡Advertencia! Cambio de pestaña o infracción de seguridad detectada.
     </div>
 
-    <!-- Contenido Principal -->
-    <main class="main-container">
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="container">
+        <!-- ÁREA DE EVALUACIÓN -->
+        <section id="panel-exam" class="card">
+            <div class="q-header">
+                <span id="q-number" class="tag-badge">Pregunta 1 de 40</span>
+                <span id="q-topic" class="topic-name">Cargando tema...</span>
+            </div>
 
-        <!-- Panel de Preguntas -->
-        <section id="exam-section" class="exam-section">
-            <div class="card question-card">
-                <div class="question-header">
-                    <span id="question-number" class="badge">Pregunta 1 de 30</span>
-                    <span id="question-topic" class="topic-tag">Cinemática</span>
-                </div>
-                
-                <h3 id="question-text" class="question-text">Cargando pregunta...</h3>
-                
-                <div id="options-container" class="options-container">
-                    <!-- Las opciones se generan dinámicamente -->
-                </div>
+            <div class="progress-track">
+                <div id="progress-bar" class="progress-fill"></div>
+            </div>
 
-                <div class="navigation-buttons">
-                    <button id="btn-prev" class="btn btn-secondary" disabled><i class="fa-solid fa-arrow-left"></i> Anterior</button>
-                    <button id="btn-next" class="btn btn-primary">Siguiente <i class="fa-solid fa-arrow-right"></i></button>
-                </div>
+            <h2 id="q-text" class="q-title">Cargando pregunta...</h2>
+
+            <div id="options-box" class="options-list">
+                <!-- Opciones cargadas dinámicamente -->
+            </div>
+
+            <div class="actions">
+                <button id="btn-prev" class="btn btn-outline" disabled>
+                    <i class="fas fa-chevron-left"></i> Anterior
+                </button>
+                <button id="btn-next" class="btn btn-accent">
+                    Siguiente <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </section>
 
-        <!-- Navegador / Mapa de Preguntas -->
-        <aside class="sidebar-section">
-            <div class="card map-card">
-                <h4><i class="fa-solid fa-grid-2"></i> Mapa de Preguntas</h4>
-                <div id="question-map" class="question-map">
-                    <!-- Botones de mapa generados dinámicamente -->
+        <!-- PANEL LATERAL -->
+        <aside id="panel-side">
+            <div class="card">
+                <h3 class="map-title">Mapa de Preguntas</h3>
+                <div id="questions-grid" class="grid-map">
+                    <!-- Cuadrícula dinámica del 1 al 40 -->
                 </div>
-                
-                <div class="map-legend">
-                    <span class="legend-item"><span class="dot current"></span> Actual</span>
-                    <span class="legend-item"><span class="dot answered"></span> Respondida</span>
-                    <span class="legend-item"><span class="dot empty"></span> Pendiente</span>
+                <div class="legend">
+                    <span class="legend-item"><i class="dot dot-active"></i> Actual</span>
+                    <span class="legend-item"><i class="dot dot-filled"></i> Contestada</span>
+                    <span class="legend-item"><i class="dot dot-empty"></i> Pendiente</span>
                 </div>
-
-                <button id="btn-finish" class="btn btn-danger btn-block"><i class="fa-solid fa-paper-plane"></i> Finalizar Evaluación</button>
+                <button id="btn-finish" class="btn btn-danger w-100">
+                    <i class="fas fa-paper-plane"></i> Finalizar Examen
+                </button>
             </div>
         </aside>
 
-        <!-- Sección de Resultados (Oculta por defecto) -->
-        <section id="results-section" class="results-section hidden">
-            <div class="card results-card">
-                <i class="fa-solid fa-circle-check success-icon"></i>
-                <h2>Evaluación Completada</h2>
-                <p>Tu reporte detallado ha sido procesado correctamente.</p>
-                
-                <div class="score-grid">
-                    <div class="score-card">
-                        <span class="score-label">Puntaje Final</span>
-                        <span id="score-val" class="score-val">0 / 30</span>
-                    </div>
-                    <div class="score-card">
-                        <span class="score-label">Porcentaje</span>
-                        <span id="score-percent" class="score-val">0%</span>
-                    </div>
-                    <div class="score-card">
-                        <span class="score-label">Violaciones de Seguridad</span>
-                        <span id="security-violations" class="score-val warning">0</span>
-                    </div>
+        <!-- PANTALLA DE RESULTADOS -->
+        <section id="panel-results" class="card hidden" style="grid-column: 1 / -1;">
+            <h2><i class="fas fa-check-circle" style="color: var(--success);"></i> Evaluación Completada</h2>
+            <div class="results-grid">
+                <div class="res-box">
+                    <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">PUNTAJE FINAL</span>
+                    <span id="res-score" class="res-big">0 / 40</span>
                 </div>
-
-                <div id="review-container" class="review-container">
-                    <h3><i class="fa-solid fa-square-poll-vertical"></i> Desglose de Respuestas</h3>
-                    <div id="review-list" class="review-list"></div>
+                <div class="res-box">
+                    <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">PORCENTAJE</span>
+                    <span id="res-percent" class="res-big">0%</span>
+                </div>
+                <div class="res-box">
+                    <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">INFRACCIONES DETECTADAS</span>
+                    <span id="res-violations" class="res-big danger">0</span>
                 </div>
             </div>
+            <h3 style="margin-top: 1.5rem; margin-bottom: 1rem;">Detalle de Preguntas y Respuestas</h3>
+            <div id="review-box"></div>
         </section>
-
     </main>
 
-    <!-- Vinculación del script funcional al final del body -->
-    <script src="index.js"></script>
+    <!-- ARCHIVOS JS EXTERNOS -->
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

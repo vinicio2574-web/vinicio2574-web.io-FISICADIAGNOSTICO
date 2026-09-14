@@ -3,13 +3,410 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluación de Física - Acceso Universitario</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <title>Evaluación Nacional de Física - Admisión Universitaria</title>
+    <!-- FontAwesome vía CDN alternativo confiable -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+            --danger: #dc2626;
+            --success: #16a34a;
+        }
+
+        /* PROTECCIÓN DE INTERFAZ */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none !important;
+            -webkit-user-select: none !important;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* BARRA SUPERIOR */
+        .navbar {
+            background-color: var(--primary);
+            color: #ffffff;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand i {
+            font-size: 2rem;
+            color: #38bdf8;
+        }
+
+        .brand-text h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-text p {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .header-widgets {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .widget {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .widget i {
+            color: #38bdf8;
+            font-size: 1.2rem;
+        }
+
+        .widget-val {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .widget-lbl {
+            font-size: 0.65rem;
+            color: #94a3b8;
+            display: block;
+            text-transform: uppercase;
+        }
+
+        /* LAYOUT PRINCIPAL */
+        .container {
+            max-width: 1280px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 2rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        /* SECCIÓN PREGUNTA */
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .tag-badge {
+            background: #eff6ff;
+            color: var(--accent);
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: 1px solid #bfdbfe;
+        }
+
+        .topic-name {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .progress-track {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .q-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.6;
+            margin-bottom: 1.75rem;
+            color: #0f172a;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            margin-bottom: 2rem;
+        }
+
+        .opt-card {
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            padding: 1.1rem 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #ffffff;
+        }
+
+        .opt-card:hover {
+            border-color: #93c5fd;
+            background: #f8fafc;
+        }
+
+        .opt-card.active {
+            border-color: var(--accent);
+            background: #eff6ff;
+            box-shadow: 0 0 0 1px var(--accent);
+        }
+
+        .opt-card input {
+            cursor: pointer;
+            accent-color: var(--accent);
+            width: 20px;
+            height: 20px;
+        }
+
+        .opt-card label {
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        /* BOTONES */
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn {
+            padding: 0.8rem 1.6rem;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+
+        .btn-accent { background: var(--accent); color: white; }
+        .btn-accent:hover { background: var(--accent-hover); }
+
+        .btn-outline { background: white; border: 1px solid var(--border); color: var(--text-dark); }
+        .btn-outline:hover { background: #f1f5f9; }
+        .btn-outline:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-danger:hover { background: #b91c1c; }
+
+        .w-100 { width: 100%; justify-content: center; }
+
+        /* PANEL LATERAL CUADRÍCULA */
+        .map-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .grid-map {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .map-num {
+            aspect-ratio: 1;
+            border: 1px solid var(--border);
+            background: #ffffff;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dark);
+            transition: all 0.15s ease;
+        }
+
+        .map-num:hover { border-color: var(--accent); }
+        .map-num.active { border-color: var(--accent); background: #eff6ff; color: var(--accent); font-weight: 700; }
+        .map-num.filled { background: var(--accent); color: white; border-color: var(--accent); }
+
+        .legend {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-active { background: #eff6ff; border: 1.5px solid var(--accent); }
+        .dot-filled { background: var(--accent); }
+        .dot-empty { background: #ffffff; border: 1.5px solid var(--border); }
+
+        /* MODALES SEGURIDAD */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(15, 23, 42, 0.96);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3);
+        }
+
+        .modal-icon-wrapper {
+            width: 75px;
+            height: 75px;
+            background: #eff6ff;
+            color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            margin: 0 auto 1.25rem;
+        }
+
+        .modal-box.danger .modal-icon-wrapper {
+            background: #fef2f2;
+            color: var(--danger);
+        }
+
+        .modal-box h2 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: #0f172a;
+        }
+
+        .modal-box p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 1.75rem;
+        }
+
+        .banner-alert {
+            background: #fef2f2;
+            border-bottom: 1px solid #fecaca;
+            color: #991b1b;
+            padding: 0.75rem;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .hidden { display: none !important; }
+
+        /* RESULTADOS */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .res-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .res-big {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--accent);
+            display: block;
+            margin-top: 0.25rem;
+        }
+
+        .res-big.danger { color: var(--danger); }
+
+        .review-card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 0.85rem;
+            background: #ffffff;
+        }
+
+        .review-card.ok { border-left: 5px solid var(--success); }
+        .review-card.fail { border-left: 5px solid var(--danger); }
+    </style>
 </head>
 <body>
 
-    <!-- OVERLAY INICIAL (PANTALLA COMPLETA OBLIGATORIA) -->
+    <!-- OVERLAY INICIAL -->
     <div id="start-overlay" class="modal-overlay">
         <div class="modal-box">
             <div class="modal-icon-wrapper">
@@ -23,7 +420,7 @@
         </div>
     </div>
 
-    <!-- OVERLAY POR PERDIDA DE FOCO / SEGURIDAD -->
+    <!-- OVERLAY ADVERTENCIA SEGURIDAD -->
     <div id="block-overlay" class="modal-overlay hidden">
         <div class="modal-box danger">
             <div class="modal-icon-wrapper">
@@ -81,9 +478,7 @@
 
             <h2 id="q-text" class="q-title">Cargando pregunta...</h2>
 
-            <div id="options-box" class="options-list">
-                <!-- Opciones cargadas dinámicamente -->
-            </div>
+            <div id="options-box" class="options-list"></div>
 
             <div class="actions">
                 <button id="btn-prev" class="btn btn-outline" disabled>
@@ -99,9 +494,7 @@
         <aside id="panel-side">
             <div class="card">
                 <h3 class="map-title">Mapa de Preguntas</h3>
-                <div id="questions-grid" class="grid-map">
-                    <!-- Cuadrícula dinámica del 1 al 40 -->
-                </div>
+                <div id="questions-grid" class="grid-map"></div>
                 <div class="legend">
                     <span class="legend-item"><i class="dot dot-active"></i> Actual</span>
                     <span class="legend-item"><i class="dot dot-filled"></i> Contestada</span>
@@ -113,20 +506,20 @@
             </div>
         </aside>
 
-        <!-- PANTALLA DE RESULTADOS -->
+        <!-- RESULTADOS -->
         <section id="panel-results" class="card hidden" style="grid-column: 1 / -1;">
             <h2><i class="fas fa-check-circle" style="color: var(--success);"></i> Evaluación Completada</h2>
             <div class="results-grid">
                 <div class="res-box">
-                    <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">PUNTAJE FINAL</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">PUNTAJE FINAL</span>
                     <span id="res-score" class="res-big">0 / 40</span>
                 </div>
                 <div class="res-box">
-                    <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">PORCENTAJE</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">PORCENTAJE</span>
                     <span id="res-percent" class="res-big">0%</span>
                 </div>
                 <div class="res-box">
-                    <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">INFRACCIONES DETECTADAS</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">INFRACCIONES DETECTADAS</span>
                     <span id="res-violations" class="res-big danger">0</span>
                 </div>
             </div>
@@ -135,7 +528,7 @@
         </section>
     </main>
 
-    <!-- ARCHIVOS JS EXTERNOS -->
+    <!-- JS EXTERNOS -->
     <script src="questions.js"></script>
     <script src="script.js"></script>
 </body>

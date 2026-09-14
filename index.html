@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evaluación Nacional de Física - Admisión Universitaria</title>
-    <!-- FontAwesome vía CDN alternativo confiable -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+
     <style>
         :root {
             --primary: #0f172a;
@@ -21,14 +19,14 @@
             --success: #16a34a;
         }
 
-        /* PROTECCIÓN DE INTERFAZ */
+        /* PROTECCIÓN DE INTERFAZ Y RESET */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             user-select: none !important;
             -webkit-user-select: none !important;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
         }
 
         body {
@@ -56,9 +54,10 @@
             gap: 1rem;
         }
 
-        .brand i {
-            font-size: 2rem;
+        .brand-icon {
+            font-size: 1.8rem;
             color: #38bdf8;
+            font-weight: bold;
         }
 
         .brand-text h1 {
@@ -85,11 +84,6 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-        }
-
-        .widget i {
-            color: #38bdf8;
-            font-size: 1.2rem;
         }
 
         .widget-val {
@@ -334,6 +328,7 @@
             justify-content: center;
             font-size: 2.2rem;
             margin: 0 auto 1.25rem;
+            font-weight: bold;
         }
 
         .modal-box.danger .modal-icon-wrapper {
@@ -409,13 +404,11 @@
     <!-- OVERLAY INICIAL -->
     <div id="start-overlay" class="modal-overlay">
         <div class="modal-box">
-            <div class="modal-icon-wrapper">
-                <i class="fas fa-shield-halved"></i>
-            </div>
+            <div class="modal-icon-wrapper">🛡️</div>
             <h2>Examen de Admisión Segura</h2>
             <p>La evaluación consta de <strong>40 preguntas</strong> (teóricas y prácticas) y dispones de <strong>1 hora y 10 segundos</strong>. El sistema activará el modo de pantalla completa y registrará cualquier intento de salir o usar accesos no permitidos.</p>
             <button id="btn-start" class="btn btn-accent w-100" style="padding: 0.9rem;">
-                <i class="fas fa-expand"></i> Iniciar Evaluación
+                ⛶ Iniciar Evaluación
             </button>
         </div>
     </div>
@@ -423,9 +416,7 @@
     <!-- OVERLAY ADVERTENCIA SEGURIDAD -->
     <div id="block-overlay" class="modal-overlay hidden">
         <div class="modal-box danger">
-            <div class="modal-icon-wrapper">
-                <i class="fas fa-triangle-exclamation"></i>
-            </div>
+            <div class="modal-icon-wrapper">⚠️</div>
             <h2>Advertencia de Seguridad</h2>
             <p>Se ha registrado un intento no permitido (cambio de ventana, captura o uso de atajos de teclado). Esta acción queda registrada en tu reporte final.</p>
             <button id="btn-unlock" class="btn btn-danger w-100">Reanudar Examen</button>
@@ -435,7 +426,7 @@
     <!-- ENCABEZADO -->
     <nav class="navbar">
         <div class="brand">
-            <i class="fas fa-atom"></i>
+            <div class="brand-icon">⚛</div>
             <div class="brand-text">
                 <h1>Evaluación Nacional de Física General</h1>
                 <p>Plataforma de Admisión Académica</p>
@@ -443,14 +434,12 @@
         </div>
         <div class="header-widgets">
             <div class="widget">
-                <i class="far fa-clock"></i>
                 <div>
                     <span class="widget-lbl">Tiempo Restante</span>
                     <span id="timer" class="widget-val">60:10</span>
                 </div>
             </div>
             <div class="widget">
-                <i class="fas fa-list-check"></i>
                 <div>
                     <span class="widget-lbl">Progreso</span>
                     <span id="prog-val" class="widget-val">0 / 40</span>
@@ -460,7 +449,7 @@
     </nav>
 
     <div id="alert-banner" class="banner-alert hidden">
-        <i class="fas fa-exclamation-triangle"></i> ¡Advertencia! Cambio de pestaña o infracción de seguridad detectada.
+        ⚠️ ¡Advertencia! Cambio de pestaña o infracción de seguridad detectada.
     </div>
 
     <!-- CONTENEDOR PRINCIPAL -->
@@ -482,10 +471,10 @@
 
             <div class="actions">
                 <button id="btn-prev" class="btn btn-outline" disabled>
-                    <i class="fas fa-chevron-left"></i> Anterior
+                    ◀ Anterior
                 </button>
                 <button id="btn-next" class="btn btn-accent">
-                    Siguiente <i class="fas fa-chevron-right"></i>
+                    Siguiente ▶
                 </button>
             </div>
         </section>
@@ -501,14 +490,14 @@
                     <span class="legend-item"><i class="dot dot-empty"></i> Pendiente</span>
                 </div>
                 <button id="btn-finish" class="btn btn-danger w-100">
-                    <i class="fas fa-paper-plane"></i> Finalizar Examen
+                    ✉ Finalizar Examen
                 </button>
             </div>
         </aside>
 
         <!-- RESULTADOS -->
         <section id="panel-results" class="card hidden" style="grid-column: 1 / -1;">
-            <h2><i class="fas fa-check-circle" style="color: var(--success);"></i> Evaluación Completada</h2>
+            <h2>✔ Evaluación Completada</h2>
             <div class="results-grid">
                 <div class="res-box">
                     <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">PUNTAJE FINAL</span>
@@ -528,8 +517,246 @@
         </section>
     </main>
 
-    <!-- JS EXTERNOS -->
-    <script src="questions.js"></script>
-    <script src="script.js"></script>
+    <!-- SCRIPT DE PREGUNTAS Y LÓGICA INTEGRADA -->
+    <script>
+        const questions = [
+            { id: 1, topic: "Unidades SI (Teoría)", question: "¿Cuál de las siguientes unidades corresponde a una magnitud fundamental en el Sistema Internacional (SI)?", options: ["Joule (J)", "Kilogramo (kg)", "Newton (N)", "Watt (W)"], answer: 1 },
+            { id: 2, topic: "Conversión de Unidades (Práctica)", question: "Un automóvil se desplaza a 72 km/h. ¿A cuántos metros por segundo (m/s) equivale dicha rapidez?", options: ["15 m/s", "20 m/s", "25 m/s", "30 m/s"], answer: 1 },
+            { id: 3, topic: "Unidades Derivadas (Teoría)", question: "La unidad del Newton (N) en el Sistema Internacional expresada en magnitudes fundamentales equivale a:", options: ["kg·m/s", "kg·m/s²", "kg·m²/s²", "kg/m·s²"], answer: 1 },
+            { id: 4, topic: "Conversión de Unidades (Práctica)", question: "Un recipiente contiene 0.05 m³ de agua. ¿A cuántos litros equivale dicho volumen?", options: ["5 Litros", "50 Litros", "500 Litros", "0.5 Litros"], answer: 1 },
+            { id: 5, topic: "Movimiento y Trayectoria (Teoría)", question: "¿Cuál es la diferencia fundamental entre el desplazamiento y la distancia recorrida?", options: ["El desplazamiento es escalar y la distancia es vectorial", "El desplazamiento depende del camino y la distancia es en línea recta", "El desplazamiento es un vector que une posición inicial y final; la distancia es la longitud de la trayectoria", "Son términos idénticos en cualquier tipo de movimiento"], answer: 2 },
+            { id: 6, topic: "Movimiento y Trayectoria (Teoría)", question: "Si un deportista da una vuelta completa a una pista circular de 400 m regresando al punto de partida, su desplazamiento es:", options: ["400 m", "200 m", "0 m", "800 m"], answer: 2 },
+            { id: 7, topic: "Trayectoria (Práctica)", question: "Un móvil se desplaza 6 m hacia el Este y luego 8 m hacia el Norte. ¿Cuál es el módulo de su desplazamiento total?", options: ["14 m", "10 m", "2 m", "48 m"], answer: 1 },
+            { id: 8, topic: "MRU (Teoría)", question: "En un Movimiento Rectilíneo Uniforme (MRU), la aceleración del móvil se caracteriza por ser:", options: ["Constante y positiva", "Nula (igual a cero)", "Variable linealmente", "Igual a la aceleración de la gravedad"], answer: 1 },
+            { id: 9, topic: "MRU (Práctica)", question: "Un tren viaja con rapidez constante de 25 m/s durante 2 minutos. ¿Qué distancia recorre en dicho tiempo?", options: ["50 m", "1500 m", "3000 m", "500 m"], answer: 2 },
+            { id: 10, topic: "MRU (Práctica)", question: "Dos autos distantes 600 m parten al encuentro simultáneamente con velocidades de 20 m/s y 10 m/s. ¿En cuánto tiempo se cruzan?", options: ["10 s", "20 s", "30 s", "60 s"], answer: 1 },
+            { id: 11, topic: "MRU (Teoría - Gráficas)", question: "En una gráfica de Posición vs. Tiempo (x vs. t) para un MRU, la pendiente de la recta representa:", options: ["La aceleración", "La velocidad constante", "El trabajo realizado", "La distancia acumulada"], answer: 1 },
+            { id: 12, topic: "MRUV (Teoría)", question: "En un MRUV descelerado (frenado), el vector aceleración y el vector velocidad tienen:", options: ["La misma dirección y sentido", "Direcciones perpendiculares", "Misma dirección pero sentidos opuestos", "Magnitudes iguales"], answer: 2 },
+            { id: 13, topic: "MRUV (Práctica)", question: "Un auto arranca del reposo con aceleración constante de 3 m/s². ¿Qué velocidad alcanza a los 6 segundos?", options: ["9 m/s", "18 m/s", "54 m/s", "12 m/s"], answer: 1 },
+            { id: 14, topic: "MRUV (Práctica)", question: "Un vehículo reduce su velocidad de 30 m/s a 10 m/s en 4 segundos. ¿Cuál es su aceleración?", options: ["-5 m/s²", "-10 m/s²", "5 m/s²", "-2.5 m/s²"], answer: 0 },
+            { id: 15, topic: "MRUV (Práctica)", question: "Un objeto parte del reposo y acelera a 2 m/s². ¿Qué distancia recorre durante los primeros 5 segundos?", options: ["10 m", "25 m", "50 m", "20 m"], answer: 1 },
+            { id: 16, topic: "MCU (Teoría)", question: "En el MCU, aunque la rapidez permanece constante, existe aceleración centrípeta debido a que:", options: ["El radio cambia continuamente", "La dirección de la velocidad cambia constantemente", "El período aumenta progresivamente", "La masa del objeto varía"], answer: 1 },
+            { id: 17, topic: "MCU (Teoría)", question: "El tiempo empleado por una partícula en completar una vuelta o revolución completa se denomina:", options: ["Frecuencia", "Período", "Velocidad angular", "Aceleración angular"], answer: 1 },
+            { id: 18, topic: "MCU (Práctica)", question: "Una rueda gira con una velocidad angular constante de 10 rad/s. Si su radio es de 0.5 m, ¿cuál es su rapidez tangencial?", options: ["5 m/s", "20 m/s", "10 m/s", "2.5 m/s"], answer: 0 },
+            { id: 19, topic: "MCU (Práctica)", question: "Un punto en el borde de un disco experimenta una velocidad tangencial de 6 m/s a 2 m del centro. ¿Cuál es su aceleración centrípeta?", options: ["3 m/s²", "12 m/s²", "18 m/s²", "36 m/s²"], answer: 2 },
+            { id: 20, topic: "Caída Libre (Teoría)", question: "Si se desprecian la resistencia del aire, en la caída libre de dos objetos de masas m1 = 1 kg y m2 = 10 kg arrojados desde la misma altura:", options: ["El más pesado cae primero", "Llegan al suelo exactamente al mismo tiempo", "El más liviano desciende más rápido", "Sus aceleraciones dependen de su volumen"], answer: 1 },
+            { id: 21, topic: "Caída Libre (Práctica)", question: "Se deja caer una piedra desde un puente. Si g = 10 m/s², ¿cuál es su velocidad tras 3 segundos de caída?", options: ["15 m/s", "30 m/s", "45 m/s", "90 m/s"], answer: 1 },
+            { id: 22, topic: "Caída Libre (Práctica)", question: "Desde un edificio se suelta una pelota. Si tarda 4 segundos en tocar el suelo, ¿cuál es la altura del edificio? (g = 10 m/s²)", options: ["40 m", "80 m", "160 m", "100 m"], answer: 1 },
+            { id: 23, topic: "Caída Libre (Práctica)", question: "Un objeto se lanza verticalmente hacia arriba con 30 m/s. ¿Cuál es el tiempo total que tarda en alcanzar su altura máxima? (g = 10 m/s²)", options: ["3 s", "6 s", "1.5 s", "30 s"], answer: 0 },
+            { id: 24, topic: "Movimiento Parabólico (Teoría)", question: "En un tiro parabólico ideal, la componente horizontal de la velocidad (Vx) se mantiene:", options: ["Aumentando continuamente", "Disminuyendo hasta hacerse cero", "Constante durante todo el trayecto", "Perpendicular a la gravedad solo en el vértice"], answer: 2 },
+            { id: 25, topic: "Movimiento Parabólico (Teoría)", question: "En el punto más alto de la trayectoria parabólica de un proyectil, la componente vertical de la velocidad (Vy) vale:", options: ["Su valor máximo", "Igual a Vx", "Cero", "Igual a la gravedad"], answer: 2 },
+            { id: 26, topic: "Movimiento Parabólico (Práctica)", question: "Un proyectil se lanza con Vo = 50 m/s a un ángulo cuyo sin(θ)=0.6 y cos(θ)=0.8. ¿Cuáles son sus componentes de velocidad Vox y Voy?", options: ["Vox = 30 m/s, Voy = 40 m/s", "Vox = 40 m/s, Voy = 30 m/s", "Vox = 50 m/s, Voy = 50 m/s", "Vox = 20 m/s, Voy = 30 m/s"], answer: 1 },
+            { id: 27, topic: "Movimiento Parabólico (Práctica)", question: "Si la componente vertical inicial de un proyectil es Voy = 20 m/s, ¿cuánto tiempo tarda en alcanzar la altura máxima? (g = 10 m/s²)", options: ["1 s", "2 s", "4 s", "8 s"], answer: 1 },
+            { id: 28, topic: "Fuerzas (Teoría)", question: "La fuerza normal es una fuerza de contacto que actúa entre dos superficies de forma:", options: ["Paralela a las superficies", "Perpendicular a la superficie de contacto", "Siempre en sentido opuesto al movimiento", "Igual a la masa por la velocidad"], answer: 1 },
+            { id: 29, topic: "Fuerzas (Teoría)", question: "La fuerza de fricción o rozamiento estático máxima se caracteriza por ser siempre:", options: ["Independiente del tipo de superficie", "Opuesta al intento de movimiento del objeto", "Igual al peso del objeto", "Mayor que la fuerza normal"], answer: 1 },
+            { id: 30, topic: "Fuerzas (Práctica)", question: "Un bloque de 10 kg reposa sobre una superficie horizontal. Si g = 9.8 m/s², ¿cuál es el valor de la fuerza Normal?", options: ["9.8 N", "98 N", "10 N", "0 N"], answer: 1 },
+            { id: 31, topic: "Primera Ley de Newton (Teoría)", question: "La Primera Ley de Newton o Ley de Inercia establece que un cuerpo permanece en reposo o con MRU a menos que:", options: ["La gravedad desaparezca", "Una fuerza neta no nula actúe sobre él", "Su masa disminuya", "Aumente su energía cinética"], answer: 1 },
+            { id: 32, topic: "Segunda Ley de Newton (Práctica)", question: "Sobre un bloque de 5 kg actúa una fuerza neta horizontal de 20 N. ¿Cuál es su aceleración?", options: ["100 m/s²", "4 m/s²", "0.25 m/s²", "15 m/s²"], answer: 1 },
+            { id: 33, topic: "Tercera Ley de Newton (Teoría)", question: "Las fuerzas de Acción y Reacción descritas por la Tercera Ley de Newton nunca se anulan entre sí porque:", options: ["Tienen magnitudes diferentes", "Actúan sobre cuerpos diferentes", "Van en la misma dirección", "Ocurren en momentos distintos"], answer: 1 },
+            { id: 34, topic: "Segunda Ley de Newton (Práctica)", question: "Una fuerza horizontal de 50 N arrastra un bloque de 8 kg sobre una mesa donde la fricción es de 10 N. ¿Cuál es la aceleración del bloque?", options: ["5.0 m/s²", "6.25 m/s²", "3.75 m/s²", "7.5 m/s²"], answer: 2 },
+            { id: 35, topic: "Trabajo Mecánico (Teoría)", question: "Si la fuerza aplicada sobre un objeto es perpendicular a su desplazamiento (ángulo de 90°), el trabajo realizado es:", options: ["Positivo máximo", "Negativo", "Cero", "Dependiente del tiempo"], answer: 2 },
+            { id: 36, topic: "Trabajo Mecánico (Práctica)", question: "Una fuerza constante de 40 N empuja una caja una distancia de 5 metros en su misma dirección. ¿Qué trabajo se realiza?", options: ["8 J", "200 J", "45 J", "100 J"], answer: 1 },
+            { id: 37, topic: "Energía Cinética (Práctica)", question: "¿Cuál es la Energía Cinética de un objeto de masa m = 4 kg que se desplaza a v = 3 m/s?", options: ["6 J", "12 J", "18 J", "36 J"], answer: 2 },
+            { id: 38, topic: "Energía Potencial Gravitatoria (Práctica)", question: "Un cuerpo de 2 kg se encuentra a una altura de 5 m del suelo. ¿Cuál es su Energía Potencial Gravitatoria? (g = 10 m/s²)", options: ["10 J", "50 J", "100 J", "20 J"], answer: 2 },
+            { id: 39, topic: "Potencia Mecánica (Teoría y Práctica)", question: "Un motor realiza un trabajo de 2400 J en 12 segundos. ¿Qué potencia mecánica desarrolla?", options: ["200 W", "28800 W", "100 W", "240 W"], answer: 0 },
+            { id: 40, topic: "Conservación de la Energía (Teoría)", question: "En ausencia de fuerzas no conservativas (como el rozamiento), la Energía Mecánica Total de un sistema se define como la suma de:", options: ["Trabajo y Potencia", "Energía Cinética + Energía Potencial", "Fuerza + Aceleración", "Masa + Velocidad"], answer: 1 }
+        ];
+
+        let idx = 0;
+        let userAnswers = {};
+        let violations = 0;
+        let timeLeft = 3610;
+        let timerId = null;
+
+        const overlayStart = document.getElementById('start-overlay');
+        const overlayBlock = document.getElementById('block-overlay');
+        const btnStart = document.getElementById('btn-start');
+        const btnUnlock = document.getElementById('btn-unlock');
+        const alertBanner = document.getElementById('alert-banner');
+
+        const qNumber = document.getElementById('q-number');
+        const qTopic = document.getElementById('q-topic');
+        const qText = document.getElementById('q-text');
+        const optionsBox = document.getElementById('options-box');
+
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+        const btnFinish = document.getElementById('btn-finish');
+
+        const timerEl = document.getElementById('timer');
+        const progVal = document.getElementById('prog-val');
+        const progressBar = document.getElementById('progress-bar');
+        const questionsGrid = document.getElementById('questions-grid');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initGrid();
+            loadQuestion(idx);
+            setupSecurity();
+
+            btnStart.addEventListener('click', () => {
+                enterFullscreen();
+                overlayStart.classList.add('hidden');
+                startTimer();
+            });
+
+            btnUnlock.addEventListener('click', () => {
+                overlayBlock.classList.add('hidden');
+                enterFullscreen();
+            });
+        });
+
+        function enterFullscreen() {
+            const el = document.documentElement;
+            if (!document.fullscreenElement) {
+                if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+                else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+            }
+        }
+
+        function setupSecurity() {
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            document.addEventListener('copy', e => e.preventDefault());
+            document.addEventListener('cut', e => e.preventDefault());
+
+            window.addEventListener('keydown', e => {
+                if (e.key === 'PrintScreen' || e.keyCode === 44 || e.key === 'F12' || (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'p'))) {
+                    e.preventDefault();
+                    triggerViolation();
+                }
+            });
+
+            window.addEventListener('blur', triggerViolation);
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) triggerViolation();
+            });
+
+            document.addEventListener('fullscreenchange', () => {
+                if (!document.fullscreenElement && overlayStart.classList.contains('hidden')) {
+                    overlayBlock.classList.remove('hidden');
+                }
+            });
+        }
+
+        function triggerViolation() {
+            violations++;
+            alertBanner.classList.remove('hidden');
+            setTimeout(() => alertBanner.classList.add('hidden'), 3500);
+        }
+
+        function startTimer() {
+            if (timerId) return;
+            timerId = setInterval(() => {
+                timeLeft--;
+                let m = Math.floor(timeLeft / 60);
+                let s = timeLeft % 60;
+                timerEl.textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    finishExam();
+                }
+            }, 1000);
+        }
+
+        function loadQuestion(i) {
+            const q = questions[i];
+            qNumber.textContent = `Pregunta ${i + 1} de ${questions.length}`;
+            qTopic.textContent = q.topic;
+            qText.textContent = q.question;
+
+            optionsBox.innerHTML = '';
+            q.options.forEach((opt, oIdx) => {
+                const item = document.createElement('div');
+                item.className = `opt-card ${userAnswers[i] === oIdx ? 'active' : ''}`;
+                item.innerHTML = `
+                    <input type="radio" name="opt" id="opt-${oIdx}" ${userAnswers[i] === oIdx ? 'checked' : ''}>
+                    <label for="opt-${oIdx}">${opt}</label>
+                `;
+                item.addEventListener('click', () => {
+                    userAnswers[i] = oIdx;
+                    loadQuestion(i);
+                    updateProgress();
+                });
+                optionsBox.appendChild(item);
+            });
+
+            btnPrev.disabled = i === 0;
+            btnNext.textContent = i === questions.length - 1 ? "Revisar Respuestas" : "Siguiente ▶";
+            updateGrid();
+        }
+
+        function updateProgress() {
+            const count = Object.keys(userAnswers).length;
+            progVal.textContent = `${count} / ${questions.length}`;
+            progressBar.style.width = `${(count / questions.length) * 100}%`;
+        }
+
+        function initGrid() {
+            questionsGrid.innerHTML = '';
+            questions.forEach((_, i) => {
+                const btn = document.createElement('div');
+                btn.className = 'map-num';
+                btn.textContent = i + 1;
+                btn.addEventListener('click', () => {
+                    idx = i;
+                    loadQuestion(idx);
+                });
+                questionsGrid.appendChild(btn);
+            });
+        }
+
+        function updateGrid() {
+            const btns = questionsGrid.querySelectorAll('.map-num');
+            btns.forEach((btn, i) => {
+                btn.className = 'map-num';
+                if (i === idx) btn.classList.add('active');
+                if (userAnswers[i] !== undefined) btn.classList.add('filled');
+            });
+        }
+
+        btnPrev.addEventListener('click', () => {
+            if (idx > 0) { idx--; loadQuestion(idx); }
+        });
+
+        btnNext.addEventListener('click', () => {
+            if (idx < questions.length - 1) { idx++; loadQuestion(idx); }
+        });
+
+        btnFinish.addEventListener('click', () => {
+            if (confirm("¿Estás seguro de que deseas finalizar la evaluación?")) {
+                finishExam();
+            }
+        });
+
+        function finishExam() {
+            clearInterval(timerId);
+            document.getElementById('panel-exam').classList.add('hidden');
+            document.getElementById('panel-side').classList.add('hidden');
+            document.getElementById('panel-results').classList.remove('hidden');
+
+            let score = 0;
+            const reviewBox = document.getElementById('review-box');
+            reviewBox.innerHTML = '';
+
+            questions.forEach((q, i) => {
+                const ok = userAnswers[i] === q.answer;
+                if (ok) score++;
+
+                const card = document.createElement('div');
+                card.className = `review-card ${ok ? 'ok' : 'fail'}`;
+                card.innerHTML = `
+                    <p style="font-weight:600; font-size:0.95rem;">${i + 1}. ${q.question}</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.4rem;">
+                        Tu respuesta: <strong>${userAnswers[i] !== undefined ? q.options[userAnswers[i]] : 'Sin responder'}</strong> 
+                        ${ok ? '✓' : '✗ (Correcta: ' + q.options[q.answer] + ')'}
+                    </p>
+                `;
+                reviewBox.appendChild(card);
+            });
+
+            document.getElementById('res-score').textContent = `${score} / ${questions.length}`;
+            document.getElementById('res-percent').textContent = `${((score / questions.length) * 100).toFixed(1)}%`;
+            document.getElementById('res-violations').textContent = violations;
+        }
+    </script>
 </body>
 </html>

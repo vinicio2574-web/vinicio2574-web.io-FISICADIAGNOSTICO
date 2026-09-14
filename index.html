@@ -3,49 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluación Nacional de Física - Admisión Universitaria</title>
+    <title>Plataforma de Admisión Académica | Evaluación de Física</title>
 
     <style>
+        /* ==========================================================================
+           RESET Y VARIABLES DE DISEÑO PREMIUM
+           ========================================================================== */
         :root {
+            --bg-body: #f1f5f9;
+            --bg-card: #ffffff;
             --primary: #0f172a;
+            --primary-light: #1e293b;
             --accent: #2563eb;
             --accent-hover: #1d4ed8;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text-dark: #1e293b;
+            --accent-soft: #eff6ff;
+            --border: #e2e8f0;
+            --text-main: #0f172a;
             --text-muted: #64748b;
-            --border: #cbd5e1;
             --danger: #dc2626;
+            --danger-soft: #fef2f2;
             --success: #16a34a;
+            --warning: #d97706;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px -2px rgba(0,0,0,0.08);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
         }
 
-        /* PROTECCIÓN DE INTERFAZ Y RESET */
+        /* PROTECCIÓN DIRECTA EN CSS CONTRA SELECCIÓN DE TEXTO */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             user-select: none !important;
             -webkit-user-select: none !important;
-            font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--text-dark);
+            background-color: var(--bg-body);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
-        /* BARRA SUPERIOR */
+        /* ==========================================================================
+           ENCABEZADO / NAVBAR
+           ========================================================================== */
         .navbar {
-            background-color: var(--primary);
+            background: var(--primary);
             color: #ffffff;
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .brand {
@@ -54,118 +72,158 @@
             gap: 1rem;
         }
 
-        .brand-icon {
-            font-size: 1.8rem;
-            color: #38bdf8;
-            font-weight: bold;
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #38bdf8, var(--accent));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(56, 189, 248, 0.4);
         }
 
         .brand-text h1 {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            letter-spacing: 0.5px;
+            letter-spacing: -0.02em;
+            color: #f8fafc;
         }
 
         .brand-text p {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #94a3b8;
+            font-weight: 500;
         }
 
-        .header-widgets {
+        .header-stats {
             display: flex;
-            gap: 1.5rem;
+            gap: 1.25rem;
         }
 
-        .widget {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15);
-            padding: 0.5rem 1.2rem;
+        .stat-badge {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 0.5rem 1rem;
             border-radius: 8px;
             display: flex;
             align-items: center;
             gap: 0.75rem;
         }
 
-        .widget-val {
-            font-weight: 700;
-            font-size: 1.1rem;
+        .stat-icon {
+            font-size: 1.2rem;
         }
 
-        .widget-lbl {
+        .stat-val {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #ffffff;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-lbl {
             font-size: 0.65rem;
             color: #94a3b8;
-            display: block;
             text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.05em;
         }
 
-        /* LAYOUT PRINCIPAL */
-        .container {
+        /* BANNER ALERTA */
+        .banner-warning {
+            background: #fef2f2;
+            border-bottom: 1px solid #fecaca;
+            color: #991b1b;
+            padding: 0.65rem;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* ==========================================================================
+           ESTRUCTURA Y CONTENEDORES
+           ========================================================================== */
+        .main-wrapper {
             max-width: 1280px;
             margin: 2rem auto;
             padding: 0 1.5rem;
             display: grid;
             grid-template-columns: 1fr 340px;
-            gap: 2rem;
+            gap: 1.75rem;
             flex: 1;
             width: 100%;
         }
 
         .card {
-            background: var(--card-bg);
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 2rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow-sm);
         }
 
-        /* SECCIÓN PREGUNTA */
-        .q-header {
+        /* ==========================================================================
+           PANEL PREGUNTA
+           ========================================================================== */
+        .q-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
         }
 
-        .tag-badge {
-            background: #eff6ff;
+        .badge-count {
+            background: var(--accent-soft);
             color: var(--accent);
-            padding: 0.4rem 0.9rem;
+            padding: 0.4rem 0.85rem;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 700;
             border: 1px solid #bfdbfe;
         }
 
-        .topic-name {
+        .topic-lbl {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
         }
 
-        .progress-track {
-            height: 8px;
+        .progress-bar-bg {
+            height: 6px;
             background: #e2e8f0;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
+            border-radius: 3px;
+            margin-bottom: 2rem;
             overflow: hidden;
         }
 
-        .progress-fill {
+        .progress-bar-fill {
             height: 100%;
-            background: var(--accent);
+            background: linear-gradient(90deg, var(--accent), #38bdf8);
             width: 0%;
-            transition: width 0.3s ease;
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .q-title {
-            font-size: 1.25rem;
+        .q-statement {
+            font-size: 1.2rem;
             font-weight: 600;
             line-height: 1.6;
             margin-bottom: 1.75rem;
-            color: #0f172a;
+            color: var(--text-main);
         }
 
-        .options-list {
+        /* OPCIONES DE RESPUESTA */
+        .options-grid {
             display: flex;
             flex-direction: column;
             gap: 0.85rem;
@@ -174,8 +232,8 @@
 
         .opt-card {
             border: 1.5px solid var(--border);
-            border-radius: 10px;
-            padding: 1.1rem 1.3rem;
+            border-radius: 12px;
+            padding: 1.1rem 1.25rem;
             display: flex;
             align-items: center;
             gap: 1rem;
@@ -187,337 +245,323 @@
         .opt-card:hover {
             border-color: #93c5fd;
             background: #f8fafc;
+            transform: translateY(-1px);
         }
 
-        .opt-card.active {
+        .opt-card.selected {
             border-color: var(--accent);
-            background: #eff6ff;
+            background: var(--accent-soft);
             box-shadow: 0 0 0 1px var(--accent);
         }
 
-        .opt-card input {
-            cursor: pointer;
-            accent-color: var(--accent);
+        .opt-radio {
             width: 20px;
             height: 20px;
+            accent-color: var(--accent);
+            cursor: pointer;
         }
 
-        .opt-card label {
+        .opt-label {
             cursor: pointer;
             width: 100%;
-            font-size: 1rem;
-            color: var(--text-dark);
+            font-size: 0.98rem;
+            color: var(--text-main);
             font-weight: 500;
+            line-height: 1.4;
         }
 
-        /* BOTONES */
-        .actions {
+        /* CONTROLES NAVEGACIÓN */
+        .actions-bar {
             display: flex;
             justify-content: space-between;
-            padding-top: 1.25rem;
+            padding-top: 1.5rem;
             border-top: 1px solid var(--border);
         }
 
         .btn {
-            padding: 0.8rem 1.6rem;
-            border-radius: 8px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
             font-weight: 600;
             border: none;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 0.6rem;
-            font-size: 0.95rem;
-            transition: background 0.2s;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
         }
 
-        .btn-accent { background: var(--accent); color: white; }
-        .btn-accent:hover { background: var(--accent-hover); }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-primary:hover { background: var(--accent-hover); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); }
 
-        .btn-outline { background: white; border: 1px solid var(--border); color: var(--text-dark); }
-        .btn-outline:hover { background: #f1f5f9; }
-        .btn-outline:disabled { opacity: 0.4; cursor: not-allowed; }
+        .btn-secondary { background: white; border: 1px solid var(--border); color: var(--text-main); }
+        .btn-secondary:hover { background: #f8fafc; border-color: #cbd5e1; }
+        .btn-secondary:disabled { opacity: 0.4; cursor: not-allowed; }
 
         .btn-danger { background: var(--danger); color: white; }
-        .btn-danger:hover { background: #b91c1c; }
+        .btn-danger:hover { background: #b91c1c; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25); }
 
-        .w-100 { width: 100%; justify-content: center; }
+        .w-full { width: 100%; justify-content: center; }
 
-        /* PANEL LATERAL CUADRÍCULA */
-        .map-title {
-            font-size: 0.9rem;
+        /* ==========================================================================
+           PANEL LATERAL / MAPA DE PREGUNTAS
+           ========================================================================== */
+        .sidebar-title {
+            font-size: 0.85rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.05em;
             color: var(--text-muted);
         }
 
-        .grid-map {
+        .q-grid-map {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 0.5rem;
+            gap: 0.6rem;
             margin-bottom: 1.5rem;
         }
 
-        .map-num {
+        .map-item {
             aspect-ratio: 1;
             border: 1px solid var(--border);
             background: #ffffff;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 0.9rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-dark);
+            color: var(--text-muted);
             transition: all 0.15s ease;
         }
 
-        .map-num:hover { border-color: var(--accent); }
-        .map-num.active { border-color: var(--accent); background: #eff6ff; color: var(--accent); font-weight: 700; }
-        .map-num.filled { background: var(--accent); color: white; border-color: var(--accent); }
+        .map-item:hover { border-color: var(--accent); color: var(--accent); }
+        .map-item.current { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+        .map-item.answered { background: var(--accent); color: white; border-color: var(--accent); }
 
-        .legend {
+        .legend-box {
             display: flex;
             justify-content: space-between;
             font-size: 0.75rem;
             color: var(--text-muted);
             margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
+            padding-bottom: 1.25rem;
             border-bottom: 1px solid var(--border);
         }
 
-        .legend-item { display: flex; align-items: center; gap: 0.4rem; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot-active { background: #eff6ff; border: 1.5px solid var(--accent); }
-        .dot-filled { background: var(--accent); }
-        .dot-empty { background: #ffffff; border: 1.5px solid var(--border); }
+        .legend-tag { display: flex; align-items: center; gap: 0.4rem; font-weight: 500; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .dot-curr { background: var(--accent-soft); border: 2px solid var(--accent); }
+        .dot-ans { background: var(--accent); }
+        .dot-empty { background: white; border: 1px solid var(--border); }
 
-        /* MODALES SEGURIDAD */
+        /* ==========================================================================
+           MODALES DE SEGURIDAD
+           ========================================================================== */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(15, 23, 42, 0.96);
-            backdrop-filter: blur(5px);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(8px);
             z-index: 9999;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 1.5rem;
         }
 
-        .modal-box {
+        .modal-card {
             background: #ffffff;
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 2.5rem;
-            max-width: 500px;
-            width: 90%;
+            max-width: 480px;
+            width: 100%;
             text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3);
+            box-shadow: var(--shadow-lg);
         }
 
-        .modal-icon-wrapper {
-            width: 75px;
-            height: 75px;
-            background: #eff6ff;
+        .modal-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--accent-soft);
             color: var(--accent);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.2rem;
+            font-size: 2rem;
             margin: 0 auto 1.25rem;
-            font-weight: bold;
         }
 
-        .modal-box.danger .modal-icon-wrapper {
-            background: #fef2f2;
+        .modal-card.warning .modal-icon {
+            background: var(--danger-soft);
             color: var(--danger);
         }
 
-        .modal-box h2 {
-            font-size: 1.4rem;
-            margin-bottom: 0.8rem;
-            color: #0f172a;
+        .modal-card h2 {
+            font-size: 1.35rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
+            font-weight: 700;
         }
 
-        .modal-box p {
-            font-size: 0.95rem;
+        .modal-card p {
+            font-size: 0.9rem;
             color: var(--text-muted);
             line-height: 1.6;
             margin-bottom: 1.75rem;
         }
 
-        .banner-alert {
-            background: #fef2f2;
-            border-bottom: 1px solid #fecaca;
-            color: #991b1b;
-            padding: 0.75rem;
-            text-align: center;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
         .hidden { display: none !important; }
 
         /* RESULTADOS */
-        .results-grid {
+        .results-summary {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 1.5rem 0;
+            gap: 1.25rem;
+            margin: 1.75rem 0;
         }
 
-        .res-box {
+        .res-card {
             background: #f8fafc;
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.5rem;
+            border-radius: 12px;
+            padding: 1.25rem;
             text-align: center;
         }
 
-        .res-big {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--accent);
-            display: block;
-            margin-top: 0.25rem;
-        }
+        .res-card .lbl { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+        .res-card .val { font-size: 2rem; font-weight: 800; color: var(--accent); margin-top: 0.25rem; display: block; }
+        .res-card .val.bad { color: var(--danger); }
 
-        .res-big.danger { color: var(--danger); }
-
-        .review-card {
+        .rev-item {
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.25rem;
-            margin-bottom: 0.85rem;
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
             background: #ffffff;
         }
-
-        .review-card.ok { border-left: 5px solid var(--success); }
-        .review-card.fail { border-left: 5px solid var(--danger); }
+        .rev-item.correct { border-left: 4px solid var(--success); }
+        .rev-item.incorrect { border-left: 4px solid var(--danger); }
     </style>
 </head>
 <body>
 
-    <!-- OVERLAY INICIAL -->
+    <!-- OVERLAY INICIAL (PANTALLA COMPLETA) -->
     <div id="start-overlay" class="modal-overlay">
-        <div class="modal-box">
-            <div class="modal-icon-wrapper">🛡️</div>
+        <div class="modal-card">
+            <div class="modal-icon">🛡️</div>
             <h2>Examen de Admisión Segura</h2>
-            <p>La evaluación consta de <strong>40 preguntas</strong> (teóricas y prácticas) y dispones de <strong>1 hora y 10 segundos</strong>. El sistema activará el modo de pantalla completa y registrará cualquier intento de salir o usar accesos no permitidos.</p>
-            <button id="btn-start" class="btn btn-accent w-100" style="padding: 0.9rem;">
-                ⛶ Iniciar Evaluación
+            <p>La evaluación consta de <strong>40 preguntas</strong> y dispones de <strong>1 hora y 10 segundos</strong>. El sistema activará el modo de pantalla completa y bloqueará la captura de pantalla o cambio de pestaña.</p>
+            <button id="btn-start" class="btn btn-primary w-full" style="padding: 0.9rem;">
+                ⛶ Iniciar Evaluación Segura
             </button>
         </div>
     </div>
 
-    <!-- OVERLAY ADVERTENCIA SEGURIDAD -->
+    <!-- OVERLAY ADVERTENCIA DE SEGURIDAD -->
     <div id="block-overlay" class="modal-overlay hidden">
-        <div class="modal-box danger">
-            <div class="modal-icon-wrapper">⚠️</div>
-            <h2>Advertencia de Seguridad</h2>
-            <p>Se ha registrado un intento no permitido (cambio de ventana, captura o uso de atajos de teclado). Esta acción queda registrada en tu reporte final.</p>
-            <button id="btn-unlock" class="btn btn-danger w-100">Reanudar Examen</button>
+        <div class="modal-card warning">
+            <div class="modal-icon">⚠️</div>
+            <h2>Infracción Detectada</h2>
+            <p>Se ha registrado un intento no permitido (cambio de ventana, atajo de teclado o salida de pantalla completa). La infracción ha sido guardada.</p>
+            <button id="btn-unlock" class="btn btn-danger w-full">Reanudar Examen</button>
         </div>
     </div>
 
-    <!-- ENCABEZADO -->
+    <!-- BARRA SUPERIOR -->
     <nav class="navbar">
         <div class="brand">
-            <div class="brand-icon">⚛</div>
+            <div class="brand-logo">⚛</div>
             <div class="brand-text">
                 <h1>Evaluación Nacional de Física General</h1>
                 <p>Plataforma de Admisión Académica</p>
             </div>
         </div>
-        <div class="header-widgets">
-            <div class="widget">
+        <div class="header-stats">
+            <div class="stat-badge">
+                <span class="stat-icon">⏱️</span>
                 <div>
-                    <span class="widget-lbl">Tiempo Restante</span>
-                    <span id="timer" class="widget-val">60:10</span>
+                    <span class="stat-lbl">Tiempo</span>
+                    <span id="timer" class="stat-val">60:10</span>
                 </div>
             </div>
-            <div class="widget">
+            <div class="stat-badge">
+                <span class="stat-icon">📊</span>
                 <div>
-                    <span class="widget-lbl">Progreso</span>
-                    <span id="prog-val" class="widget-val">0 / 40</span>
+                    <span class="stat-lbl">Progreso</span>
+                    <span id="prog-val" class="stat-val">0 / 40</span>
                 </div>
             </div>
         </div>
     </nav>
 
-    <div id="alert-banner" class="banner-alert hidden">
-        ⚠️ ¡Advertencia! Cambio de pestaña o infracción de seguridad detectada.
+    <div id="alert-banner" class="banner-warning hidden">
+        ⚠️ Alerta: Cambio de pestaña o intento no permitido detectado.
     </div>
 
     <!-- CONTENEDOR PRINCIPAL -->
-    <main class="container">
-        <!-- ÁREA DE EVALUACIÓN -->
+    <main class="main-wrapper">
+        <!-- ÁREA DE LA PREGUNTA -->
         <section id="panel-exam" class="card">
-            <div class="q-header">
-                <span id="q-number" class="tag-badge">Pregunta 1 de 40</span>
-                <span id="q-topic" class="topic-name">Cargando tema...</span>
+            <div class="q-meta">
+                <span id="q-number" class="badge-count">Pregunta 1 de 40</span>
+                <span id="q-topic" class="topic-lbl">Cargando tema...</span>
             </div>
 
-            <div class="progress-track">
-                <div id="progress-bar" class="progress-fill"></div>
+            <div class="progress-bar-bg">
+                <div id="progress-bar" class="progress-bar-fill"></div>
             </div>
 
-            <h2 id="q-text" class="q-title">Cargando pregunta...</h2>
+            <h2 id="q-text" class="q-statement">Cargando...</h2>
 
-            <div id="options-box" class="options-list"></div>
+            <div id="options-box" class="options-grid"></div>
 
-            <div class="actions">
-                <button id="btn-prev" class="btn btn-outline" disabled>
-                    ◀ Anterior
-                </button>
-                <button id="btn-next" class="btn btn-accent">
-                    Siguiente ▶
-                </button>
+            <div class="actions-bar">
+                <button id="btn-prev" class="btn btn-secondary" disabled>◀ Anterior</button>
+                <button id="btn-next" class="btn btn-primary">Siguiente ▶</button>
             </div>
         </section>
 
         <!-- PANEL LATERAL -->
         <aside id="panel-side">
             <div class="card">
-                <h3 class="map-title">Mapa de Preguntas</h3>
-                <div id="questions-grid" class="grid-map"></div>
-                <div class="legend">
-                    <span class="legend-item"><i class="dot dot-active"></i> Actual</span>
-                    <span class="legend-item"><i class="dot dot-filled"></i> Contestada</span>
-                    <span class="legend-item"><i class="dot dot-empty"></i> Pendiente</span>
+                <h3 class="sidebar-title">Mapa de Preguntas</h3>
+                <div id="questions-grid" class="q-grid-map"></div>
+                <div class="legend-box">
+                    <span class="legend-tag"><i class="dot dot-curr"></i> Actual</span>
+                    <span class="legend-tag"><i class="dot dot-ans"></i> Hecha</span>
+                    <span class="legend-tag"><i class="dot dot-empty"></i> Pendiente</span>
                 </div>
-                <button id="btn-finish" class="btn btn-danger w-100">
-                    ✉ Finalizar Examen
-                </button>
+                <button id="btn-finish" class="btn btn-danger w-full">✉ Entregar Examen</button>
             </div>
         </aside>
 
-        <!-- RESULTADOS -->
+        <!-- PANEL RESULTADOS -->
         <section id="panel-results" class="card hidden" style="grid-column: 1 / -1;">
-            <h2>✔ Evaluación Completada</h2>
-            <div class="results-grid">
-                <div class="res-box">
-                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">PUNTAJE FINAL</span>
-                    <span id="res-score" class="res-big">0 / 40</span>
+            <h2>✔ Evaluación Finalizada</h2>
+            <div class="results-summary">
+                <div class="res-card">
+                    <span class="lbl">Puntaje Obtenido</span>
+                    <span id="res-score" class="val">0 / 40</span>
                 </div>
-                <div class="res-box">
-                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">PORCENTAJE</span>
-                    <span id="res-percent" class="res-big">0%</span>
+                <div class="res-card">
+                    <span class="lbl">Porcentaje</span>
+                    <span id="res-percent" class="val">0%</span>
                 </div>
-                <div class="res-box">
-                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">INFRACCIONES DETECTADAS</span>
-                    <span id="res-violations" class="res-big danger">0</span>
+                <div class="res-card">
+                    <span class="lbl">Infracciones Registradas</span>
+                    <span id="res-violations" class="val bad">0</span>
                 </div>
             </div>
-            <h3 style="margin-top: 1.5rem; margin-bottom: 1rem;">Detalle de Preguntas y Respuestas</h3>
+            <h3 style="margin: 1.5rem 0 1rem;">Revisión de Respuestas</h3>
             <div id="review-box"></div>
         </section>
     </main>
 
-    <!-- SCRIPT DE PREGUNTAS Y LÓGICA INTEGRADA -->
+    <!-- SCRIPT COMPLETO: PREGUNTAS + SEGURIDAD + CONTROL -->
     <script>
         const questions = [
             { id: 1, topic: "Unidades SI (Teoría)", question: "¿Cuál de las siguientes unidades corresponde a una magnitud fundamental en el Sistema Internacional (SI)?", options: ["Joule (J)", "Kilogramo (kg)", "Newton (N)", "Watt (W)"], answer: 1 },
@@ -531,7 +575,7 @@
             { id: 9, topic: "MRU (Práctica)", question: "Un tren viaja con rapidez constante de 25 m/s durante 2 minutos. ¿Qué distancia recorre en dicho tiempo?", options: ["50 m", "1500 m", "3000 m", "500 m"], answer: 2 },
             { id: 10, topic: "MRU (Práctica)", question: "Dos autos distantes 600 m parten al encuentro simultáneamente con velocidades de 20 m/s y 10 m/s. ¿En cuánto tiempo se cruzan?", options: ["10 s", "20 s", "30 s", "60 s"], answer: 1 },
             { id: 11, topic: "MRU (Teoría - Gráficas)", question: "En una gráfica de Posición vs. Tiempo (x vs. t) para un MRU, la pendiente de la recta representa:", options: ["La aceleración", "La velocidad constante", "El trabajo realizado", "La distancia acumulada"], answer: 1 },
-            { id: 12, topic: "MRUV (Teoría)", question: "En un MRUV descelerado (frenado), el vector aceleración y el vector velocidad tienen:", options: ["La misma dirección y sentido", "Direcciones perpendiculares", "Misma dirección pero sentidos opuestos", "Magnitudes iguales"], answer: 2 },
+            { id: 12, topic: "MRUV (Teoría)", question: "En un MRUV desacelerado (frenado), el vector aceleración y el vector velocidad tienen:", options: ["La misma dirección y sentido", "Direcciones perpendiculares", "Misma dirección pero sentidos opuestos", "Magnitudes iguales"], answer: 2 },
             { id: 13, topic: "MRUV (Práctica)", question: "Un auto arranca del reposo con aceleración constante de 3 m/s². ¿Qué velocidad alcanza a los 6 segundos?", options: ["9 m/s", "18 m/s", "54 m/s", "12 m/s"], answer: 1 },
             { id: 14, topic: "MRUV (Práctica)", question: "Un vehículo reduce su velocidad de 30 m/s a 10 m/s en 4 segundos. ¿Cuál es su aceleración?", options: ["-5 m/s²", "-10 m/s²", "5 m/s²", "-2.5 m/s²"], answer: 0 },
             { id: 15, topic: "MRUV (Práctica)", question: "Un objeto parte del reposo y acelera a 2 m/s². ¿Qué distancia recorre durante los primeros 5 segundos?", options: ["10 m", "25 m", "50 m", "20 m"], answer: 1 },
@@ -539,7 +583,7 @@
             { id: 17, topic: "MCU (Teoría)", question: "El tiempo empleado por una partícula en completar una vuelta o revolución completa se denomina:", options: ["Frecuencia", "Período", "Velocidad angular", "Aceleración angular"], answer: 1 },
             { id: 18, topic: "MCU (Práctica)", question: "Una rueda gira con una velocidad angular constante de 10 rad/s. Si su radio es de 0.5 m, ¿cuál es su rapidez tangencial?", options: ["5 m/s", "20 m/s", "10 m/s", "2.5 m/s"], answer: 0 },
             { id: 19, topic: "MCU (Práctica)", question: "Un punto en el borde de un disco experimenta una velocidad tangencial de 6 m/s a 2 m del centro. ¿Cuál es su aceleración centrípeta?", options: ["3 m/s²", "12 m/s²", "18 m/s²", "36 m/s²"], answer: 2 },
-            { id: 20, topic: "Caída Libre (Teoría)", question: "Si se desprecian la resistencia del aire, en la caída libre de dos objetos de masas m1 = 1 kg y m2 = 10 kg arrojados desde la misma altura:", options: ["El más pesado cae primero", "Llegan al suelo exactamente al mismo tiempo", "El más liviano desciende más rápido", "Sus aceleraciones dependen de su volumen"], answer: 1 },
+            { id: 20, topic: "Caída Libre (Teoría)", question: "Si se desprecia la resistencia del aire, en la caída libre de dos objetos de masas m1 = 1 kg y m2 = 10 kg arrojados desde la misma altura:", options: ["El más pesado cae primero", "Llegan al suelo exactamente al mismo tiempo", "El más liviano desciende más rápido", "Sus aceleraciones dependen de su volumen"], answer: 1 },
             { id: 21, topic: "Caída Libre (Práctica)", question: "Se deja caer una piedra desde un puente. Si g = 10 m/s², ¿cuál es su velocidad tras 3 segundos de caída?", options: ["15 m/s", "30 m/s", "45 m/s", "90 m/s"], answer: 1 },
             { id: 22, topic: "Caída Libre (Práctica)", question: "Desde un edificio se suelta una pelota. Si tarda 4 segundos en tocar el suelo, ¿cuál es la altura del edificio? (g = 10 m/s²)", options: ["40 m", "80 m", "160 m", "100 m"], answer: 1 },
             { id: 23, topic: "Caída Libre (Práctica)", question: "Un objeto se lanza verticalmente hacia arriba con 30 m/s. ¿Cuál es el tiempo total que tarda en alcanzar su altura máxima? (g = 10 m/s²)", options: ["3 s", "6 s", "1.5 s", "30 s"], answer: 0 },
@@ -565,7 +609,7 @@
         let idx = 0;
         let userAnswers = {};
         let violations = 0;
-        let timeLeft = 3610;
+        let timeLeft = 3610; // 1 hora y 10 segundos
         let timerId = null;
 
         const overlayStart = document.getElementById('start-overlay');
@@ -591,7 +635,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             initGrid();
             loadQuestion(idx);
-            setupSecurity();
+            setupSecurityEvents();
 
             btnStart.addEventListener('click', () => {
                 enterFullscreen();
@@ -613,23 +657,38 @@
             }
         }
 
-        function setupSecurity() {
+        /* ==========================================================================
+           SISTEMA DE SEGURIDAD (ANTICOPIA / SALIDA DE PESTAÑA / ATAJOS)
+           ========================================================================== */
+        function setupSecurityEvents() {
+            // Bloqueo de menú contextual (clic derecho)
             document.addEventListener('contextmenu', e => e.preventDefault());
+
+            // Bloqueo de portapapeles
             document.addEventListener('copy', e => e.preventDefault());
             document.addEventListener('cut', e => e.preventDefault());
+            document.addEventListener('paste', e => e.preventDefault());
 
+            // Bloqueo de atajos de teclado (F12, PrintScreen, Ctrl+C, Ctrl+U, etc.)
             window.addEventListener('keydown', e => {
-                if (e.key === 'PrintScreen' || e.keyCode === 44 || e.key === 'F12' || (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'p'))) {
+                if (
+                    e.key === 'PrintScreen' || 
+                    e.keyCode === 44 || 
+                    e.key === 'F12' || 
+                    (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'p' || e.key === 'a'))
+                ) {
                     e.preventDefault();
                     triggerViolation();
                 }
             });
 
+            // Pérdida de foco / cambio de pestaña
             window.addEventListener('blur', triggerViolation);
             document.addEventListener('visibilitychange', () => {
                 if (document.hidden) triggerViolation();
             });
 
+            // Control de salida del modo Pantalla Completa
             document.addEventListener('fullscreenchange', () => {
                 if (!document.fullscreenElement && overlayStart.classList.contains('hidden')) {
                     overlayBlock.classList.remove('hidden');
@@ -640,9 +699,10 @@
         function triggerViolation() {
             violations++;
             alertBanner.classList.remove('hidden');
-            setTimeout(() => alertBanner.classList.add('hidden'), 3500);
+            setTimeout(() => alertBanner.classList.add('hidden'), 4000);
         }
 
+        /* TEMPORIZADOR */
         function startTimer() {
             if (timerId) return;
             timerId = setInterval(() => {
@@ -657,6 +717,7 @@
             }, 1000);
         }
 
+        /* RENDER DE PREGUNTA */
         function loadQuestion(i) {
             const q = questions[i];
             qNumber.textContent = `Pregunta ${i + 1} de ${questions.length}`;
@@ -666,10 +727,10 @@
             optionsBox.innerHTML = '';
             q.options.forEach((opt, oIdx) => {
                 const item = document.createElement('div');
-                item.className = `opt-card ${userAnswers[i] === oIdx ? 'active' : ''}`;
+                item.className = `opt-card ${userAnswers[i] === oIdx ? 'selected' : ''}`;
                 item.innerHTML = `
-                    <input type="radio" name="opt" id="opt-${oIdx}" ${userAnswers[i] === oIdx ? 'checked' : ''}>
-                    <label for="opt-${oIdx}">${opt}</label>
+                    <input type="radio" class="opt-radio" name="opt" id="opt-${oIdx}" ${userAnswers[i] === oIdx ? 'checked' : ''}>
+                    <label class="opt-label" for="opt-${oIdx}">${opt}</label>
                 `;
                 item.addEventListener('click', () => {
                     userAnswers[i] = oIdx;
@@ -694,7 +755,7 @@
             questionsGrid.innerHTML = '';
             questions.forEach((_, i) => {
                 const btn = document.createElement('div');
-                btn.className = 'map-num';
+                btn.className = 'map-item';
                 btn.textContent = i + 1;
                 btn.addEventListener('click', () => {
                     idx = i;
@@ -705,11 +766,11 @@
         }
 
         function updateGrid() {
-            const btns = questionsGrid.querySelectorAll('.map-num');
+            const btns = questionsGrid.querySelectorAll('.map-item');
             btns.forEach((btn, i) => {
-                btn.className = 'map-num';
-                if (i === idx) btn.classList.add('active');
-                if (userAnswers[i] !== undefined) btn.classList.add('filled');
+                btn.className = 'map-item';
+                if (i === idx) btn.classList.add('current');
+                if (userAnswers[i] !== undefined) btn.classList.add('answered');
             });
         }
 
@@ -742,12 +803,12 @@
                 if (ok) score++;
 
                 const card = document.createElement('div');
-                card.className = `review-card ${ok ? 'ok' : 'fail'}`;
+                card.className = `rev-item ${ok ? 'correct' : 'incorrect'}`;
                 card.innerHTML = `
                     <p style="font-weight:600; font-size:0.95rem;">${i + 1}. ${q.question}</p>
                     <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.4rem;">
-                        Tu respuesta: <strong>${userAnswers[i] !== undefined ? q.options[userAnswers[i]] : 'Sin responder'}</strong> 
-                        ${ok ? '✓' : '✗ (Correcta: ' + q.options[q.answer] + ')'}
+                        Respuesta marcada: <strong>${userAnswers[i] !== undefined ? q.options[userAnswers[i]] : 'Sin responder'}</strong> 
+                        ${ok ? '✓ Correcta' : '✗ (Correcta: ' + q.options[q.answer] + ')'}
                     </p>
                 `;
                 reviewBox.appendChild(card);
